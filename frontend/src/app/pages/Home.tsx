@@ -190,6 +190,36 @@ export function Home() {
         </div>
       </section>
 
+      {/* Infinite Ticker Marquee Banner */}
+      <section className="bg-gray-900 text-white py-6 overflow-hidden border-y border-gray-800">
+        <div className="animate-marquee whitespace-nowrap text-lg sm:text-xl font-light tracking-widest flex items-center space-x-12 uppercase">
+          <span className="flex items-center space-x-12">
+            <span>• {t('freeDelivery')}</span>
+            <span>• {t('qualityGuarantee')}</span>
+            <span>• {t('popularJewelry')}</span>
+            <span>• {t('luxuryPackaging')}</span>
+            <span>• Silver Jewelry Tashkent</span>
+            <span>• 925 Sterling Silver</span>
+          </span>
+          <span className="flex items-center space-x-12">
+            <span>• {t('freeDelivery')}</span>
+            <span>• {t('qualityGuarantee')}</span>
+            <span>• {t('popularJewelry')}</span>
+            <span>• {t('luxuryPackaging')}</span>
+            <span>• Silver Jewelry Tashkent</span>
+            <span>• 925 Sterling Silver</span>
+          </span>
+          <span className="flex items-center space-x-12">
+            <span>• {t('freeDelivery')}</span>
+            <span>• {t('qualityGuarantee')}</span>
+            <span>• {t('popularJewelry')}</span>
+            <span>• {t('luxuryPackaging')}</span>
+            <span>• Silver Jewelry Tashkent</span>
+            <span>• 925 Sterling Silver</span>
+          </span>
+        </div>
+      </section>
+
       {/* Benefits */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
