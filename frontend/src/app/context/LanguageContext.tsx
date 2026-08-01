@@ -1,13 +1,16 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 
-export type Language = 'ru' | 'uz';
+type Language = 'ru' | 'uz';
 
-interface Translations {
-  [key: string]: {
-    ru: string;
-    uz: string;
-  };
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
 }
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export type Translations = Record<string, Record<Language, string>>;
 
 export const translations: Translations = {
   // Navigation
@@ -22,8 +25,8 @@ export const translations: Translations = {
   heroTitle2: { ru: 'серебряные украшения', uz: 'kumush bezaklar' },
   heroTitle3: { ru: ' в Ташкенте — Anori', uz: ' Toshkentda — Anori' },
   heroSubtitle: { 
-    ru: 'Минималистичные украшения премиум-класса для ценителей утонченного стиля', 
-    uz: 'Nafis stil ixlosmandlari uchun premium klassdagi minimalistik taqinchoqlar' 
+    ru: 'Привозные серебряные украшения из премиального серебра. Современный дизайн для любителей яркого', 
+    uz: 'Premium kumushdan keltirilgan серебряные taqinchoqlar. Yorqin stil ixlosmandlari uchun zamonaviy dizayn' 
   },
   viewCollection: { ru: 'Смотреть коллекцию', uz: 'To‘plamni ko‘rish' },
   
@@ -36,7 +39,7 @@ export const translations: Translations = {
   goToCategory: { ru: 'Перейти в категорию', uz: 'Kategoriyaga o‘tish' },
   
   // Benefits
-  freeDelivery: { ru: 'Бесплатная доставка', uz: 'Bepul yetkazib berish' },
+  freeDelivery: { ru: 'Быстрая доставка', uz: 'Tezkor yetkazib berish' },
   freeDeliveryDesc: { ru: 'Доставляем по Ташкенту в течение 24 часов. По Узбекистану — 2-3 дня', uz: 'Toshkent bo‘ylab 24 soat ichida. O‘zbekiston bo‘ylab — 2-3 kun' },
   qualityGuarantee: { ru: 'Гарантия качества', uz: 'Sifat kafolati' },
   qualityGuaranteeDesc: { ru: 'Все украшения изготовлены из качественного серебра 925 пробы', uz: 'Barcha taqinchoqlar yuqori sifatli 925 probali kumushdan tayyorlangan' },
@@ -59,19 +62,21 @@ export const translations: Translations = {
     uz: '"Zanjir xarididan juda mamnunman. Nafis, nozik, aynan men qidirgan narsa. Rahmat Anori!"'
   },
   followInstagram: { ru: 'Следите за нами в Instagram', uz: 'Bizni Instagramda kuzatib boring' },
-  subscribe: { ru: 'Подписаться', uz: 'Azo bo‘lish' },
+  subscribe: { ru: 'Подписаться', uz: 'Azo бо‘lish' },
 
   // Footer
   footerDesc: {
-    ru: 'Премиальные украшения ручной работы. Минималистичный дизайн для современных и стильных.',
-    uz: 'Qo‘lda tayyorlangan premium taqinchoqlar. Zamonaviy va stil egalari uchun minimalistik dizayn.'
+    ru: 'Привозные серебряные украшения из премиального серебра. Современный дизайн для любителей яркого.',
+    uz: 'Premium kumushdan keltirilgan taqinchoqlar. Yorqin stil ixlosmandlari uchun zamonaviy dizayn.'
   },
   navigation: { ru: 'Навигация', uz: 'Navigatsiya' },
   contacts: { ru: 'Контакты', uz: 'Kontaktlar' },
   socialMedia: { ru: 'Социальные сети', uz: 'Ijtimoiy tarmoqlar' },
-  address: { ru: 'г. Ташкент, Узбекистон Овози 35', uz: 'Toshkent sh., O‘zbekiston Ovozi ko‘chasi 35' },
+  address: { ru: 'г. Ташкент, Узбекистон Овози 6', uz: 'Toshkent sh., O‘zbekiston Ovozi ko‘chasi 6' },
   allRightsReserved: { ru: 'Все права защищены.', uz: 'Barcha huquqlar himoyalangan.' },
   workingHours: { ru: 'Режим работы: 10:30 – 21:00 (без выходных)', uz: 'Ish vaqti: 10:30 – 21:00 (dam olish kunlarisiz)' },
+
+  // SEO Section
   seoTitle: {
     ru: 'Anori Jewelry — ваш гид по стилю в мире серебра',
     uz: 'Anori Jewelry — kumush olamidagi sizning stil bo‘yicha yo‘l ko‘rsatuvchingiz'
@@ -101,24 +106,8 @@ export const translations: Translations = {
   currency: { ru: 'сум', uz: 'so‘m' },
 };
 
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
-}
-
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('anori_lang');
-    return (saved === 'uz' || saved === 'ru') ? saved : 'ru';
-  });
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    localStorage.setItem('anori_lang', lang);
-  };
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [language, setLanguage] = useState<Language>('ru');
 
   const t = (key: string): string => {
     if (translations[key] && translations[key][language]) {
