@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Mail, Phone, MapPin, Clock } from 'lucide-react';
 import { Link } from 'react-router';
 import { AnoriLogo } from './AnoriLogo';
 import { useLanguage } from '../context/LanguageContext';
@@ -57,11 +57,15 @@ export function Footer() {
             <h4 className="text-sm tracking-wider uppercase mb-6 text-gray-900">{t('contacts')}</h4>
             <ul className="space-y-3">
               <li className="flex items-center space-x-3 text-sm text-gray-600">
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4 flex-shrink-0" />
                 <span>+998 88 688 67 77</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-gray-600">
-                <Mail className="w-4 h-4" />
+                <Clock className="w-4 h-4 flex-shrink-0 text-yellow-700" />
+                <span>{t('workingHours')}</span>
+              </li>
+              <li className="flex items-center space-x-3 text-sm text-gray-600">
+                <Mail className="w-4 h-4 flex-shrink-0" />
                 <span>info@anori-tashkent.uz</span>
               </li>
               <li className="flex items-start space-x-3 text-sm text-gray-600">

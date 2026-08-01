@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ShoppingBag, Menu, X, Globe } from 'lucide-react';
+import { ShoppingBag, Menu, X, Globe, Clock } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useLanguage } from '../context/LanguageContext';
 import { AnoriLogo } from './AnoriLogo';
@@ -12,8 +12,21 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+      {/* Top Working Hours Bar */}
+      <div className="bg-gray-900 text-gray-300 py-1.5 px-4 text-xs">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Clock className="w-3.5 h-3.5 text-yellow-500" />
+            <span>{t('workingHours')}</span>
+          </div>
+          <div className="hidden sm:block">
+            <span>+998 88 688 67 77</span>
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center py-2">
             <AnoriLogo className="h-12 w-auto" />

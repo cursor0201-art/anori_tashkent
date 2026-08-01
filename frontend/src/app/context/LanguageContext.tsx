@@ -71,6 +71,7 @@ export const translations: Translations = {
   socialMedia: { ru: 'Социальные сети', uz: 'Ijtimoiy tarmoqlar' },
   address: { ru: 'г. Ташкент, Узбекистон Овози 35', uz: 'Toshkent sh., O‘zbekiston Ovozi ko‘chasi 35' },
   allRightsReserved: { ru: 'Все права защищены.', uz: 'Barcha huquqlar himoyalangan.' },
+  workingHours: { ru: 'Режим работы: 10:30 – 21:00 (без выходных)', uz: 'Ish vaqti: 10:30 – 21:00 (dam olish kunlarisiz)' },
   seoTitle: {
     ru: 'Anori Jewelry — ваш гид по стилю в мире серебра',
     uz: 'Anori Jewelry — kumush olamidagi sizning stil bo‘yicha yo‘l ko‘rsatuvchingiz'
