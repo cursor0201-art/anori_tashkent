@@ -1,5 +1,6 @@
 import { Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-react';
 import { Link } from 'react-router';
+import { AnoriLogo } from './AnoriLogo';
 
 export function Footer() {
   return (
@@ -8,9 +9,9 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand */}
           <div>
-            <h3 className="text-xl tracking-[0.2em] font-light text-gray-900 mb-6">
-              ANORI<span className="text-yellow-700">_</span>TASHKENT
-            </h3>
+            <Link to="/" className="inline-block mb-6">
+              <AnoriLogo className="h-10 w-auto" />
+            </Link>
             <p className="text-sm text-gray-600 leading-relaxed">
               Премиальные украшения ручной работы. Минималистичный дизайн для современных и стильных.
             </p>

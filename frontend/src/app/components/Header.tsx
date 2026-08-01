@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { ShoppingBag, Menu, X, Globe } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useLanguage } from '../context/LanguageContext';
+import { AnoriLogo } from './AnoriLogo';
 import { useState } from 'react';
 
 export function Header() {
@@ -12,12 +13,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <span className="text-2xl tracking-[0.3em] font-light text-gray-900">
-              ANORI<span className="text-yellow-700">_</span>TASHKENT
-            </span>
+          <Link to="/" className="flex items-center py-2">
+            <AnoriLogo className="h-12 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
