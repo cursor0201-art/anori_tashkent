@@ -1,9 +1,11 @@
 import { Link } from 'react-router';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export function Cart() {
   const { items, removeItem, updateQuantity, totalPrice } = useCart();
+  const { language, t } = useLanguage();
 
   if (items.length === 0) {
     return (
@@ -108,16 +110,37 @@ export function Cart() {
 
             <Link
               to="/checkout"
-              className="block w-full bg-gray-900 text-white text-center py-4 rounded-full hover:bg-yellow-700 transition-colors duration-300"
+              className="block w-full bg-gray-900 text-white text-center py-4 rounded-full hover:bg-yellow-700 transition-colors duration-300 mb-3"
             >
-              Оформить заказ
+              {language === 'uz' ? 'Buyurtmani rasmiylashtirish' : 'Оформить заказ'}
             </Link>
+
+            <button
+              onClick={() => {
+                const isUz = language === 'uz';
+                const itemsList = items.map(item => {
+                  const productUrl = `${window.location.origin}/product/${item.id}`;
+                  return isUz
+                    ? `• ${item.name} — ${item.quantity} dona — ${(item.price * item.quantity).toLocaleString('uz-UZ')} so‘m\n  Havola: ${productUrl}`
+                    : `• ${item.name} — ${item.quantity} шт — ${(item.price * item.quantity).toLocaleString('ru-RU')} сум\n  Ссылка: ${productUrl}`;
+                }).join('\n\n');
+
+                const message = isUz
+                  ? `Assalomu alaykum, quyidagi mahsulotlarni buyurtma bermoqchiman:\n\n${itemsList}\n\nJami summa: ${totalPrice.toLocaleString('uz-UZ')} so‘m`
+                  : `Здравствуйте, хочу заказать несколько товаров:\n\n${itemsList}\n\nОбщая сумма: ${totalPrice.toLocaleString('ru-RU')} сум`;
+
+                window.open(`https://t.me/Anori_store?text=${encodeURIComponent(message)}`, '_blank');
+              }}
+              className="block w-full bg-[#24A1DE] text-white text-center py-3.5 rounded-full hover:bg-[#1E88BE] transition-colors duration-300"
+            >
+              {language === 'uz' ? "Telegram'da tezkor buyurtma" : "Быстрый заказ в Telegram"}
+            </button>
 
             <Link
               to="/catalog"
               className="block text-center text-gray-600 hover:text-gray-900 text-sm mt-4 transition-colors"
             >
-              Продолжить покупки
+              {language === 'uz' ? 'Xaridni davom ettirish' : 'Продолжить покупки'}
             </Link>
           </div>
         </div>
