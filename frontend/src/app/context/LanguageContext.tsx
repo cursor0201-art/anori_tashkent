@@ -61,7 +61,16 @@ export const translations: Translations = {
   followInstagram: { ru: 'Следите за нами в Instagram', uz: 'Bizni Instagramda kuzatib boring' },
   subscribe: { ru: 'Подписаться', uz: 'Azo bo‘lish' },
 
-  // SEO Section
+  // Footer
+  footerDesc: {
+    ru: 'Премиальные украшения ручной работы. Минималистичный дизайн для современных и стильных.',
+    uz: 'Qo‘lda tayyorlangan premium taqinchoqlar. Zamonaviy va stil egalari uchun minimalistik dizayn.'
+  },
+  navigation: { ru: 'Навигация', uz: 'Navigatsiya' },
+  contacts: { ru: 'Контакты', uz: 'Kontaktlar' },
+  socialMedia: { ru: 'Социальные сети', uz: 'Ijtimoiy tarmoqlar' },
+  address: { ru: 'г. Ташкент, Узбекистон Овози 35', uz: 'Toshkent sh., O‘zbekiston Ovozi ko‘chasi 35' },
+  allRightsReserved: { ru: 'Все права защищены.', uz: 'Barcha huquqlar himoyalangan.' },
   seoTitle: {
     ru: 'Anori Jewelry — ваш гид по стилю в мире серебра',
     uz: 'Anori Jewelry — kumush olamidagi sizning stil bo‘yicha yo‘l ko‘rsatuvchingiz'
