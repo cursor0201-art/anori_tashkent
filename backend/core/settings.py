@@ -23,6 +23,7 @@ if not SECRET_KEY:
 DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[
+    '*',
     'presidential-marylynne-baveehub-f2fad4d9.koyeb.app',
     'anori.uz',
     'www.anori.uz',
@@ -180,17 +181,25 @@ SIMPLE_JWT = {
 }
 
 # CORS configuration
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=True)
+
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[
     "https://anori.uz",
     "https://www.anori.uz"
+])
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.pages\.dev$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[
     "https://anori.uz",
-    "https://www.anori.uz"
-]
+    "https://www.anori.uz",
+    "https://*.pages.dev",
+    "https://presidential-marylynne-baveehub-f2fad4d9.koyeb.app"
+])
 
 # Security settings for production
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
