@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Check } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export function Checkout() {
   const { items, totalPrice, clearCart } = useCart();
+  const { language, t } = useLanguage();
   const navigate = useNavigate();
   const [orderPlaced, setOrderPlaced] = useState(false);
 
@@ -18,22 +20,35 @@ export function Checkout() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const isUz = language === 'uz';
+
     // Construct Telegram message with product links for rich previews
     const itemsList = items.map(item => {
       const productUrl = `${window.location.origin}/product/${item.id}`;
-      return `${item.name} — ${item.quantity} шт — ${(item.price * item.quantity).toLocaleString('ru-RU')} сум\n` +
-        `Ссылка: ${productUrl}`;
+      return isUz
+        ? `${item.name} — ${item.quantity} dona — ${(item.price * item.quantity).toLocaleString('uz-UZ')} so‘m\n` +
+          `Havola: ${productUrl}`
+        : `${item.name} — ${item.quantity} шт — ${(item.price * item.quantity).toLocaleString('ru-RU')} сум\n` +
+          `Ссылка: ${productUrl}`;
     }).join('\n\n');
 
-    const message = `Здравствуйте, хочу оформить заказ.\n\n` +
-      `Имя: ${formData.name}\n` +
-      `Телефон: ${formData.phone}\n` +
-      `Адрес: ${formData.address}\n` +
-      `Комментарий: ${formData.comment || '-'}\n\n` +
-      `Товары:\n${itemsList}\n\n` +
-      `Общая сумма: ${totalPrice.toLocaleString('ru-RU')} сум`;
+    const message = isUz
+      ? `Assalomu alaykum, buyurtma bermoqchiman.\n\n` +
+        `Ism: ${formData.name}\n` +
+        `Telefon: ${formData.phone}\n` +
+        `Manzil: ${formData.address}\n` +
+        `Izoh: ${formData.comment || '-'}\n\n` +
+        `Mahsulotlar:\n${itemsList}\n\n` +
+        `Jami summa: ${totalPrice.toLocaleString('uz-UZ')} so‘m`
+      : `Здравствуйте, хочу оформить заказ.\n\n` +
+        `Имя: ${formData.name}\n` +
+        `Телефон: ${formData.phone}\n` +
+        `Адрес: ${formData.address}\n` +
+        `Комментарий: ${formData.comment || '-'}\n\n` +
+        `Товары:\n${itemsList}\n\n` +
+        `Общая сумма: ${totalPrice.toLocaleString('ru-RU')} сум`;
 
-    const telegramUrl = `https://t.me/Kas1mov_sa?text=${encodeURIComponent(message)}`;
+    const telegramUrl = `https://t.me/Anori_store?text=${encodeURIComponent(message)}`;
 
     setOrderPlaced(true);
 

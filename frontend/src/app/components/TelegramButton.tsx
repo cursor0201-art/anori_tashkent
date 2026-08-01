@@ -1,5 +1,6 @@
 import { Send } from 'lucide-react';
 import { Product } from '../data/products';
+import { useLanguage } from '../context/LanguageContext';
 
 interface TelegramButtonProps {
     product: Product;
@@ -8,19 +9,29 @@ interface TelegramButtonProps {
 }
 
 export function TelegramButton({ product, variant = 'primary', className = '' }: TelegramButtonProps) {
+    const { language, t } = useLanguage();
+
     const handleTelegramOrder = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
 
         const handleOrder = () => {
-            const message = `Здравствуйте, хочу заказать украшение.\n\n` +
-                `Название: ${product.name}\n` +
-                `Цена: ${product.price.toLocaleString('ru-RU')} сум\n` +
-                `Категория: ${product.category}\n` +
-                `Ссылка: ${window.location.origin}/product/${product.id}\n\n` +
-                `Хочу оформить заказ.`;
+            const isUz = language === 'uz';
+            const message = isUz
+                ? `Assalomu alaykum, taqinchoq buyurtma qilmoqchiman.\n\n` +
+                  `Nomi: ${product.name}\n` +
+                  `Narxi: ${product.price.toLocaleString('uz-UZ')} so‘m\n` +
+                  `Kategoriya: ${product.category}\n` +
+                  `Havola: ${window.location.origin}/product/${product.id}\n\n` +
+                  `Buyurtmani rasmiylashtirmoqchiman.`
+                : `Здравствуйте, хочу заказать украшение.\n\n` +
+                  `Название: ${product.name}\n` +
+                  `Цена: ${product.price.toLocaleString('ru-RU')} сум\n` +
+                  `Категория: ${product.category}\n` +
+                  `Ссылка: ${window.location.origin}/product/${product.id}\n\n` +
+                  `Хочу оформить заказ.`;
 
-            const telegramUrl = `https://t.me/Kas1mov_sa?text=${encodeURIComponent(message)}`;
+            const telegramUrl = `https://t.me/Anori_store?text=${encodeURIComponent(message)}`;
             window.open(telegramUrl, '_blank');
         };
         handleOrder();
@@ -38,10 +49,10 @@ export function TelegramButton({ product, variant = 'primary', className = '' }:
         <button
             onClick={handleTelegramOrder}
             className={`${baseStyles} ${variants[variant]} ${className}`}
-            title="Заказать в Telegram"
+            title={language === 'uz' ? "Telegram'da buyurtma berish" : "Заказать в Telegram"}
         >
             <Send className={variant === 'minimal' ? "w-5 h-5" : "w-4 h-4"} />
-            {variant !== 'minimal' && <span>Заказать в Telegram</span>}
+            {variant !== 'minimal' && <span>{language === 'uz' ? "Telegram'da buyurtma berish" : "Заказать в Telegram"}</span>}
         </button>
     );
 }
