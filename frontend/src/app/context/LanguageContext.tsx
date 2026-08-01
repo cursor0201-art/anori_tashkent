@@ -26,7 +26,7 @@ export const translations: Translations = {
   heroTitle3: { ru: ' в Ташкенте — Anori', uz: ' Toshkentda — Anori' },
   heroSubtitle: { 
     ru: 'Привозные серебряные украшения из премиального серебра. Современный дизайн для любителей яркого', 
-    uz: 'Premium kumushdan keltirilgan серебряные taqinchoqlar. Yorqin stil ixlosmandlari uchun zamonaviy dizayn' 
+    uz: 'Premium kumushdan keltirilgan taqinchoqlar. Yorqin stil ixlosmandlari uchun zamonaviy dizayn' 
   },
   viewCollection: { ru: 'Смотреть коллекцию', uz: 'To‘plamni ko‘rish' },
   
