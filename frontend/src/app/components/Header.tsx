@@ -1,10 +1,12 @@
 import { Link } from 'react-router';
-import { ShoppingBag, Menu, X } from 'lucide-react';
+import { ShoppingBag, Menu, X, Globe } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import { useState } from 'react';
 
 export function Header() {
   const { totalItems } = useCart();
+  const { language, setLanguage, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -21,24 +23,48 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-12">
             <Link to="/" className="text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase">
-              Главная
+              {t('home')}
             </Link>
             <Link to="/catalog" className="text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase">
-              Каталог
+              {t('catalog')}
             </Link>
             <Link to="/catalog?category=necklace" className="text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase">
-              Ожерелья
+              {t('necklaces')}
             </Link>
             <Link to="/catalog?category=chain" className="text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase">
-              Цепочки
+              {t('chains')}
             </Link>
             <Link to="/catalog?category=pendant" className="text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase">
-              Кулоны
+              {t('pendants')}
             </Link>
           </nav>
 
-          {/* Cart Icon */}
+          {/* Right Section: Language Switcher & Cart */}
           <div className="flex items-center space-x-4">
+            {/* Language Switcher */}
+            <div className="flex items-center border border-gray-200 rounded-full p-1 bg-gray-50 text-xs font-medium">
+              <button
+                onClick={() => setLanguage('ru')}
+                className={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+                  language === 'ru'
+                    ? 'bg-gray-900 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                RU
+              </button>
+              <button
+                onClick={() => setLanguage('uz')}
+                className={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+                  language === 'uz'
+                    ? 'bg-gray-900 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                UZ
+              </button>
+            </div>
+
             <Link to="/cart" className="relative p-2 text-gray-700 hover:text-gray-900 transition-colors">
               <ShoppingBag className="w-6 h-6" />
               {totalItems > 0 && (
@@ -66,35 +92,35 @@ export function Header() {
               onClick={() => setMobileMenuOpen(false)}
               className="block text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase"
             >
-              Главная
+              {t('home')}
             </Link>
             <Link
               to="/catalog"
               onClick={() => setMobileMenuOpen(false)}
               className="block text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase"
             >
-              Каталог
+              {t('catalog')}
             </Link>
             <Link
               to="/catalog?category=necklace"
               onClick={() => setMobileMenuOpen(false)}
               className="block text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase"
             >
-              Ожерелья
+              {t('necklaces')}
             </Link>
             <Link
               to="/catalog?category=chain"
               onClick={() => setMobileMenuOpen(false)}
               className="block text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase"
             >
-              Цепочки
+              {t('chains')}
             </Link>
             <Link
               to="/catalog?category=pendant"
               onClick={() => setMobileMenuOpen(false)}
               className="block text-sm tracking-wider text-gray-700 hover:text-gray-900 transition-colors uppercase"
             >
-              Кулоны
+              {t('pendants')}
             </Link>
           </nav>
         )}

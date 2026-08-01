@@ -5,9 +5,11 @@ import { Product } from '../data/products';
 import { ProductCard } from '../components/ProductCard';
 import { TelegramButton } from '../components/TelegramButton';
 import { SEO } from '../components/SEO';
+import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 
 export function Home() {
+  const { t } = useLanguage();
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +46,7 @@ export function Home() {
 
   return (
     <div>
-      <SEO title="Главная" />
+      <SEO title={t('home')} />
       {/* Hero Section */}
       <section className="relative h-[85vh] min-h-[600px] bg-gradient-to-br from-gray-50 to-white">
         <div className="absolute inset-0 overflow-hidden">
@@ -59,16 +61,16 @@ export function Home() {
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-7xl tracking-tight mb-6">
-              Silver jewelry и <span className="text-yellow-700">серебряные украшения</span> в Ташкенте — Anori
+              {t('heroTitle1')}<span className="text-yellow-700">{t('heroTitle2')}</span>{t('heroTitle3')}
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-lg">
-              Минималистичные украшения премиум-класса для ценителей утонченного стиля
+              {t('heroSubtitle')}
             </p>
             <Link
               to="/catalog"
               className="inline-flex items-center space-x-2 bg-gray-900 text-white px-8 py-4 rounded-full hover:bg-yellow-700 transition-colors duration-300"
             >
-              <span className="tracking-wider uppercase text-sm">Смотреть коллекцию</span>
+              <span className="tracking-wider uppercase text-sm">{t('viewCollection')}</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -78,9 +80,9 @@ export function Home() {
       {/* Featured Products */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl tracking-tight mb-4">Популярные украшения</h2>
+          <h2 className="text-4xl tracking-tight mb-4">{t('popularJewelry')}</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Наши бестселлеры — воплощение элегантности и минимализма
+            {t('popularSubtitle')}
           </p>
         </div>
 
@@ -101,7 +103,7 @@ export function Home() {
             to="/catalog"
             className="inline-flex items-center space-x-2 text-gray-900 hover:text-yellow-700 transition-colors"
           >
-            <span className="tracking-wider uppercase text-sm">Посмотреть всю коллекцию</span>
+            <span className="tracking-wider uppercase text-sm">{t('viewAllCollection')}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -111,8 +113,8 @@ export function Home() {
       <section className="bg-gray-50 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl tracking-tight mb-4">Категории</h2>
-            <p className="text-gray-600">Найдите украшение для любого случая</p>
+            <h2 className="text-4xl tracking-tight mb-4">{t('categories')}</h2>
+            <p className="text-gray-600">{t('categoriesSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -126,7 +128,7 @@ export function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end z-10">
                   <div className="p-8 text-white">
                     <h3 className="text-2xl tracking-wide mb-2">{cat.name}</h3>
-                    <p className="text-sm text-gray-200">Перейти в категорию</p>
+                    <p className="text-sm text-gray-200">{t('goToCategory')}</p>
                   </div>
                 </div>
               </Link>
@@ -143,8 +145,8 @@ export function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div className="p-8 text-white">
-                      <h3 className="text-2xl tracking-wide mb-2">Ожерелья</h3>
-                      <p className="text-sm text-gray-200">Изысканные колье для особых случаев</p>
+                      <h3 className="text-2xl tracking-wide mb-2">{t('necklaces')}</h3>
+                      <p className="text-sm text-gray-200">{t('categoriesSubtitle')}</p>
                     </div>
                   </div>
                 </Link>
@@ -160,8 +162,8 @@ export function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div className="p-8 text-white">
-                      <h3 className="text-2xl tracking-wide mb-2">Цепочки</h3>
-                      <p className="text-sm text-gray-200">Элегантные цепи на каждый день</p>
+                      <h3 className="text-2xl tracking-wide mb-2">{t('chains')}</h3>
+                      <p className="text-sm text-gray-200">{t('categoriesSubtitle')}</p>
                     </div>
                   </div>
                 </Link>
@@ -177,8 +179,8 @@ export function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div className="p-8 text-white">
-                      <h3 className="text-2xl tracking-wide mb-2">Кулоны</h3>
-                      <p className="text-sm text-gray-200">Минималистичные подвески</p>
+                      <h3 className="text-2xl tracking-wide mb-2">{t('pendants')}</h3>
+                      <p className="text-sm text-gray-200">{t('categoriesSubtitle')}</p>
                     </div>
                   </div>
                 </Link>
@@ -195,9 +197,9 @@ export function Home() {
             <div className="w-16 h-16 bg-yellow-700/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Truck className="w-8 h-8 text-yellow-700" />
             </div>
-            <h3 className="text-xl mb-3">Бесплатная доставка</h3>
+            <h3 className="text-xl mb-3">{t('freeDelivery')}</h3>
             <p className="text-gray-600 leading-relaxed">
-              Доставляем по Ташкенту в течение 24 часов. По Узбекистану — 2-3 дня
+              {t('freeDeliveryDesc')}
             </p>
           </div>
 
@@ -205,9 +207,9 @@ export function Home() {
             <div className="w-16 h-16 bg-yellow-700/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Shield className="w-8 h-8 text-yellow-700" />
             </div>
-            <h3 className="text-xl mb-3">Гарантия качества</h3>
+            <h3 className="text-xl mb-3">{t('qualityGuarantee')}</h3>
             <p className="text-gray-600 leading-relaxed">
-              Все украшения изготовлены из золота 585 пробы с сертификатами
+              {t('qualityGuaranteeDesc')}
             </p>
           </div>
 
@@ -215,9 +217,9 @@ export function Home() {
             <div className="w-16 h-16 bg-yellow-700/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Gift className="w-8 h-8 text-yellow-700" />
             </div>
-            <h3 className="text-xl mb-3">Роскошная упаковка</h3>
+            <h3 className="text-xl mb-3">{t('luxuryPackaging')}</h3>
             <p className="text-gray-600 leading-relaxed">
-              Каждое украшение упаковано в премиальную коробку с лентой
+              {t('luxuryPackagingDesc')}
             </p>
           </div>
         </div>
