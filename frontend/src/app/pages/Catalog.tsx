@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router';
 import { SlidersHorizontal, Loader2 } from 'lucide-react';
 import { Product } from '../data/products';
 import { ProductCard } from '../components/ProductCard';
+import { SEO } from '../components/SEO';
 import api from '../services/api';
 
 export function Catalog() {
@@ -67,6 +68,11 @@ export function Catalog() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <SEO
+        title={selectedCategory ? `${categoryNames[selectedCategory as keyof typeof categoryNames]} — Silver jewelry в Ташкенте` : 'Каталог серебряных украшений и silver jewelry в Ташкенте'}
+        description="Каталог серебряных украшений Anori Tashkent: silver rings, silver necklace, silver chain, серебряные цепочки и кулоны 925 пробы с быстрой доставкой."
+        keywords="silver jewelry, silver rings, silver necklace, silver chain, серебряные украшения, серебряные цепочки, серебряные кольца, кулоны, Ташкент"
+      />
       <div className="mb-12">
         <h1 className="text-4xl tracking-tight mb-4">
           {selectedCategory ? categoryNames[selectedCategory as keyof typeof categoryNames] : 'Каталог'}
