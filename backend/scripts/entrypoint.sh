@@ -12,16 +12,26 @@ python manage.py migrate --noinput
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
-# Optional: Create superuser from environment variables
-if [ "$ADMIN_USER" ] && [ "$ADMIN_PASSWORD" ]; then
-    echo "Creating superuser..."
-    python manage.py shell <<EOF
+# Create or update superuser
+ADMIN_USER="${ADMIN_USER:-admin}"
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-adminpassword123}"
+ADMIN_EMAIL="${ADMIN_EMAIL:-admin@anori.uz}"
+
+echo "Ensuring superuser '$ADMIN_USER' exists..."
+python manage.py shell <<EOF
 from django.contrib.auth import get_user_model
 User = get_user_model()
 if not User.objects.filter(username="$ADMIN_USER").exists():
     User.objects.create_superuser("$ADMIN_USER", "$ADMIN_EMAIL", "$ADMIN_PASSWORD")
+    print("Superuser created successfully!")
+else:
+    u = User.objects.get(username="$ADMIN_USER")
+    u.set_password("$ADMIN_PASSWORD")
+    u.is_superuser = True
+    u.is_staff = True
+    u.save()
+    print("Superuser password updated successfully!")
 EOF
-fi
 
 echo "Starting server on port ${PORT:-8000}..."
 exec gunicorn core.wsgi:application --bind 0.0.0.0:${PORT:-8000}
