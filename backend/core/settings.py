@@ -98,19 +98,16 @@ if DATABASE_URL:
         "default": dj_database_url.parse(
             DATABASE_URL,
             conn_max_age=600,
-            ssl_require=True,
+            ssl_require=False if "sqlite" in DATABASE_URL else True,
         )
     }
 else:
-    if DEBUG:
-        DATABASES = {
-            "default": {
-                "ENGINE": "django.db.backends.sqlite3",
-                "NAME": BASE_DIR / "db.sqlite3",
-            }
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
-    else:
-        raise ImproperlyConfigured("DATABASE_URL must be set in production (DEBUG=False)")
+    }
 
 
 # Password validation
