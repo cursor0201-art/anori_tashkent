@@ -229,8 +229,8 @@ export function Home() {
       <section className="bg-gray-50 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl tracking-tight mb-4">Отзывы покупателей</h2>
-            <p className="text-gray-600">Что говорят наши клиенты</p>
+            <h2 className="text-4xl tracking-tight mb-4">{t('reviews')}</h2>
+            <p className="text-gray-600">{t('reviewsSubtitle')}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -241,9 +241,9 @@ export function Home() {
                 ))}
               </div>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                "Купила золотое колье — невероятное качество! Минималистичный дизайн идеально подходит для повседневной носки."
+                {t('review1')}
               </p>
-              <p className="text-sm">— Алина К.</p>
+              <p className="text-sm">— Alina K.</p>
             </div>
 
             <div className="bg-white rounded-lg p-8 shadow-sm">
@@ -253,9 +253,9 @@ export function Home() {
                 ))}
               </div>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                "Заказывала кулон в подарок. Упаковка превзошла все ожидания — настоящий люкс! Доставка быстрая."
+                {t('review2')}
               </p>
-              <p className="text-sm">— Марина Д.</p>
+              <p className="text-sm">— Marina D.</p>
             </div>
 
             <div className="bg-white rounded-lg p-8 shadow-sm">
@@ -265,9 +265,9 @@ export function Home() {
                 ))}
               </div>
               <p className="text-gray-700 mb-6 leading-relaxed">
-                "Очень довольна покупкой цепочки. Элегантная, тонкая, именно то, что искала. Спасибо Anori!"
+                {t('review3')}
               </p>
-              <p className="text-sm">— Диана С.</p>
+              <p className="text-sm">— Diana S.</p>
             </div>
           </div>
         </div>
@@ -277,14 +277,14 @@ export function Home() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-12">
           <h2 className="text-4xl tracking-tight mb-4">@anori_tashkent</h2>
-          <p className="text-gray-600 mb-6">Следите за нами в Instagram</p>
+          <p className="text-gray-600 mb-6">{t('followInstagram')}</p>
           <a
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center space-x-2 text-gray-900 hover:text-yellow-700 transition-colors"
           >
-            <span className="tracking-wider uppercase text-sm">Подписаться</span>
+            <span className="tracking-wider uppercase text-sm">{t('subscribe')}</span>
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>
@@ -320,19 +320,17 @@ export function Home() {
           </div>
         </div>
       </section>
+
       {/* SEO Content Section */}
       <section className="bg-white py-16 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl mb-6 font-light">Anori Jewelry — ваш гид по стилю в мире серебра</h2>
+            <h2 className="text-2xl mb-6 font-light">{t('seoTitle')}</h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              Anori is a jewelry store selling silver rings, chains and necklaces. Мы предлагаем широкий выбор:
-              <strong> silver jewelry, silver rings, silver necklace, серебряные украшения, серебряные кольца, серебряные цепочки</strong>
-              в Ташкенте с быстрой доставкой по всему Узбекистану.
+              {t('seoText1')}
             </p>
             <p className="text-gray-600 leading-relaxed">
-              Наш магазин украшений Anori Tashkent специализируется на минималистичных и трендовых изделиях,
-              которые подчеркнут вашу индивидуальность и добавят утонченности любому образу.
+              {t('seoText2')}
             </p>
           </div>
         </div>

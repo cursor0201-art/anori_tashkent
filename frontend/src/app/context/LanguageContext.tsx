@@ -46,6 +46,34 @@ export const translations: Translations = {
   // Testimonials
   reviews: { ru: 'Отзывы покупателей', uz: 'Mijozlar fikrlari' },
   reviewsSubtitle: { ru: 'Что говорят наши клиенты', uz: 'Mijozlarimiz biz haqimizda nima deyishadi' },
+  review1: {
+    ru: '"Купила колье — невероятное качество! Минималистичный дизайн идеально подходит для повседневной носки."',
+    uz: '"Kumush bo‘yinbog‘ xarid qildim — sifati ajoyib! Minimalistik dizayn har kunlik taqish uchun juda mos."'
+  },
+  review2: {
+    ru: '"Заказывала кулон в подарок. Упаковка превзошла все ожидания — настоящий люкс! Доставка быстрая."',
+    uz: '"Sovg‘a uchun zabon buyurtma qilgan edim. Qadoqlash kutilganidan ham a‘lo darajada — haqiqiy lyuks! Yetkazib berish juda tez."'
+  },
+  review3: {
+    ru: '"Очень довольна покупкой цепочки. Элегантная, тонкая, именно то, что искала. Спасибо Anori!"',
+    uz: '"Zanjir xarididan juda mamnunman. Nafis, nozik, aynan men qidirgan narsa. Rahmat Anori!"'
+  },
+  followInstagram: { ru: 'Следите за нами в Instagram', uz: 'Bizni Instagramda kuzatib boring' },
+  subscribe: { ru: 'Подписаться', uz: 'Azo bo‘lish' },
+
+  // SEO Section
+  seoTitle: {
+    ru: 'Anori Jewelry — ваш гид по стилю в мире серебра',
+    uz: 'Anori Jewelry — kumush olamidagi sizning stil bo‘yicha yo‘l ko‘rsatuvchingiz'
+  },
+  seoText1: {
+    ru: 'Anori — это ювелирный магазин серебряных украшений. Мы предлагаем широкий выбор: silver jewelry, silver rings, silver necklace, серебряные украшения, серебряные кольца, серебряные цепочки в Ташкенте с быстрой доставкой по всему Узбекистану.',
+    uz: 'Anori — bu kumush taqinchoqlar va bezaklar do‘koni. Biz keng turdagi mahsulotlarni taklif etamiz: kumush uzuklar (silver rings), bo‘yinbog‘lar (silver necklace), zanjirlar (silver chain) va kumush buyumlar Toshkentda butun O‘zbekiston bo‘ylab tez yetkazib berish bilan.'
+  },
+  seoText2: {
+    ru: 'Наш магазин украшений Anori Tashkent специализируется на минималистичных и трендовых изделиях, которые подчеркнут вашу индивидуальность и добавят утонченности любому образу.',
+    uz: 'Bizning Anori Tashkent taqinchoqlar do‘konimiz sizning individualligingizni ta’kidlaydigan va har qanday ko‘rinishga nafosat bag‘ishlaydigan minimalistik hamda trenddagi buyumlarga ixtisoslashgan.'
+  },
   
   // Cart & Checkout
   cart: { ru: 'Корзина', uz: 'Savat' },
