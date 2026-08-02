@@ -119,22 +119,22 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile Drawer Overlay & Sliding Panel (< 1024px) */}
+      {/* Mobile Drawer Fullscreen Overlay & Sliding Panel (< 1024px) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden flex">
-          {/* Backdrop Blur Overlay */}
+        <div className="fixed inset-0 z-[999] lg:hidden flex">
+          {/* Dark Backdrop Overlay */}
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-black/70 backdrop-blur-md transition-opacity"
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          {/* Right Sliding Drawer Panel */}
-          <div className="relative ml-auto w-full max-w-xs sm:max-w-sm bg-white h-full shadow-2xl flex flex-col z-[101] overflow-y-auto pt-[env(safe-area-inset-top,16px)] pb-[env(safe-area-inset-bottom,16px)] px-6">
+          {/* Full Height Right Drawer Panel */}
+          <div className="relative ml-auto w-[85%] max-w-xs sm:max-w-sm bg-white h-[100vh] min-h-[100dvh] shadow-2xl flex flex-col z-[1000] overflow-y-auto pt-6 pb-8 px-6">
             <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
               <AnoriLogo className="h-10 w-auto" />
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-gray-900"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-500 hover:text-gray-900 rounded-full hover:bg-gray-100"
                 aria-label="Закрыть меню"
               >
                 <X className="w-6 h-6" />
