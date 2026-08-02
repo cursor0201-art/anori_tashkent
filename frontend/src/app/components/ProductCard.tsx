@@ -8,29 +8,37 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="group relative">
-      <Link to={`/product/${product.id}`} className="block">
-        <div className="relative aspect-square overflow-hidden bg-gray-100 rounded-lg mb-4">
+    <div className="group relative bg-white rounded-xl border border-gray-100 p-2 sm:p-3 flex flex-col justify-between h-full transition-all duration-300 hover:shadow-lg">
+      <Link to={`/product/${product.id}`} className="block flex-1">
+        {/* Fixed Aspect Ratio 1:1 Image Container */}
+        <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-gray-50 mb-3">
           <img
             src={product.image}
             alt={product.name}
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
         </div>
-        <div className="space-y-2">
-          <h3 className="text-gray-900 group-hover:text-yellow-700 transition-colors">
+
+        {/* Title with line-clamp-2 & Price */}
+        <div className="space-y-1.5 mb-3">
+          <h3 className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-[#C8102E] transition-colors line-clamp-2 min-h-[2.5rem] leading-snug">
             {product.name}
           </h3>
-          <p className="text-gray-900">
-            {product.price.toLocaleString('ru-RU')} сум
+          <p className="text-sm sm:text-base font-bold text-gray-900">
+            {product.price.toLocaleString('ru-RU')} <span className="text-xs font-normal text-gray-500">сум</span>
           </p>
         </div>
       </Link>
 
-      {/* Telegram Button Overlay */}
-      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <TelegramButton product={product} variant="minimal" className="bg-white/80 backdrop-blur-sm shadow-md" />
+      {/* Touch-optimized Order Button (Full width on mobile, 44px min height) */}
+      <div className="mt-auto">
+        <TelegramButton
+          product={product}
+          variant="primary"
+          className="w-full min-h-[44px] text-xs sm:text-sm py-2.5 px-3 rounded-lg shadow-none hover:shadow-md"
+        />
       </div>
     </div>
   );

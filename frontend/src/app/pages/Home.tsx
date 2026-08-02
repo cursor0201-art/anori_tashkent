@@ -47,51 +47,51 @@ export function Home() {
   return (
     <div>
       <SEO title={t('home')} />
-      {/* Hero Section */}
-      <section className="relative h-[85vh] min-h-[600px] bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white overflow-hidden">
+      {/* Hero Section (Adaptive Single-column on mobile < 640px, flex/grid on >= 640px) */}
+      <section className="relative min-h-[60vh] sm:min-h-[75vh] lg:min-h-[85vh] bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white overflow-hidden py-12 sm:py-20 flex items-center">
         <div className="absolute inset-0 overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1600&q=80"
             alt="Silver jewelry background"
-            className="w-full h-full object-cover opacity-35 filter grayscale brightness-110"
+            className="w-full h-full object-cover opacity-30 filter grayscale brightness-110 object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
         </div>
 
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-          <div className="max-w-2xl">
-            <h1 className="text-5xl md:text-7xl tracking-tight mb-6 font-light">
-              {t('heroTitle1')}<span className="text-[#C8102E] font-normal">{t('heroTitle2')}</span>{t('heroTitle3')}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl text-left">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight mb-4 sm:mb-6 font-light leading-tight">
+              {t('heroTitle1')}<span className="text-[#C8102E] font-normal block sm:inline">{t('heroTitle2')}</span>{t('heroTitle3')}
             </h1>
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed max-w-lg font-light">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed max-w-lg font-light">
               {t('heroSubtitle')}
             </p>
             <Link
               to="/catalog"
-              className="inline-flex items-center space-x-3 bg-[#C8102E] hover:bg-black border border-[#C8102E] text-white px-9 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-red-900/30 transform hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center space-x-3 bg-[#C8102E] hover:bg-black border border-[#C8102E] text-white px-7 sm:px-9 py-3.5 sm:py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-red-900/30 w-full sm:w-auto min-h-[44px]"
             >
-              <span className="tracking-wider uppercase text-sm font-medium">{t('viewCollection')}</span>
-              <ArrowRight className="w-5 h-5 text-white" />
+              <span className="tracking-wider uppercase text-xs sm:text-sm font-medium">{t('viewCollection')}</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl tracking-tight mb-4">{t('popularJewelry')}</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+      {/* Featured Products (2 cols on mobile 320-639px, 3 on desktop) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl tracking-tight mb-3 sm:mb-4">{t('popularJewelry')}</h2>
+          <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
             {t('popularSubtitle')}
           </p>
         </div>
 
         {loading ? (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-yellow-700" />
+            <Loader2 className="w-8 h-8 animate-spin text-[#C8102E]" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {featuredProducts.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}

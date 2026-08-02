@@ -294,28 +294,29 @@ export function Catalog() {
 
         {/* Products Grid */}
         <div className="flex-1">
-          <div className="mb-6">
-            <p className="text-sm text-gray-600">
-              Найдено украшений: {filteredProducts.length}
+          <div className="mb-6 flex items-center justify-between">
+            <p className="text-xs sm:text-sm text-gray-600">
+              Найдено украшений: <span className="font-semibold text-gray-900">{filteredProducts.length}</span>
             </p>
           </div>
 
           {loading ? (
             <div className="flex justify-center items-center py-32">
-              <Loader2 className="w-8 h-8 animate-spin text-yellow-700" />
+              <Loader2 className="w-8 h-8 animate-spin text-[#C8102E]" />
             </div>
           ) : error ? (
             <div className="text-center py-16">
               <p className="text-red-500 mb-4">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="text-yellow-700 underline"
+                className="text-[#C8102E] underline"
               >
                 Попробовать снова
               </button>
             </div>
           ) : filteredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+            /* Responsive Grid: 2 cols on mobile (320-639px), 3 on tablet (640-1023px), 4 on desktop (1024px+) */
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
               {filteredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}
