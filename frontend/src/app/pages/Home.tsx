@@ -48,30 +48,30 @@ export function Home() {
     <div>
       <SEO title={t('home')} />
       {/* Hero Section */}
-      <section className="relative h-[85vh] min-h-[600px] bg-gradient-to-br from-gray-50 to-white">
+      <section className="relative h-[85vh] min-h-[600px] bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1600&q=80"
-            alt="Luxury jewelry"
-            className="w-full h-full object-cover opacity-40"
+            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=1600&q=80"
+            alt="Silver jewelry background"
+            className="w-full h-full object-cover opacity-35 filter grayscale brightness-110"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
         </div>
 
         <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
           <div className="max-w-2xl">
-            <h1 className="text-5xl md:text-7xl tracking-tight mb-6">
-              {t('heroTitle1')}<span className="text-yellow-700">{t('heroTitle2')}</span>{t('heroTitle3')}
+            <h1 className="text-5xl md:text-7xl tracking-tight mb-6 font-light">
+              {t('heroTitle1')}<span className="text-[#C8102E] font-normal">{t('heroTitle2')}</span>{t('heroTitle3')}
             </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-lg">
+            <p className="text-xl text-gray-300 mb-8 leading-relaxed max-w-lg font-light">
               {t('heroSubtitle')}
             </p>
             <Link
               to="/catalog"
-              className="inline-flex items-center space-x-2 bg-gray-900 text-white px-8 py-4 rounded-full hover:bg-yellow-700 transition-colors duration-300"
+              className="inline-flex items-center space-x-3 bg-[#C8102E] hover:bg-black border border-[#C8102E] text-white px-9 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-red-900/30 transform hover:-translate-y-0.5"
             >
-              <span className="tracking-wider uppercase text-sm">{t('viewCollection')}</span>
-              <ArrowRight className="w-5 h-5" />
+              <span className="tracking-wider uppercase text-sm font-medium">{t('viewCollection')}</span>
+              <ArrowRight className="w-5 h-5 text-white" />
             </Link>
           </div>
         </div>
@@ -224,8 +224,8 @@ export function Home() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="text-center">
-            <div className="w-16 h-16 bg-yellow-700/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Truck className="w-8 h-8 text-yellow-700" />
+            <div className="w-16 h-16 bg-[#C8102E]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Truck className="w-8 h-8 text-[#C8102E]" />
             </div>
             <h3 className="text-xl mb-3">{t('freeDelivery')}</h3>
             <p className="text-gray-600 leading-relaxed">
@@ -234,8 +234,8 @@ export function Home() {
           </div>
 
           <div className="text-center">
-            <div className="w-16 h-16 bg-yellow-700/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Shield className="w-8 h-8 text-yellow-700" />
+            <div className="w-16 h-16 bg-[#C8102E]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Shield className="w-8 h-8 text-[#C8102E]" />
             </div>
             <h3 className="text-xl mb-3">{t('qualityGuarantee')}</h3>
             <p className="text-gray-600 leading-relaxed">
@@ -244,8 +244,8 @@ export function Home() {
           </div>
 
           <div className="text-center">
-            <div className="w-16 h-16 bg-yellow-700/10 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Gift className="w-8 h-8 text-yellow-700" />
+            <div className="w-16 h-16 bg-[#C8102E]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Gift className="w-8 h-8 text-[#C8102E]" />
             </div>
             <h3 className="text-xl mb-3">{t('luxuryPackaging')}</h3>
             <p className="text-gray-600 leading-relaxed">
