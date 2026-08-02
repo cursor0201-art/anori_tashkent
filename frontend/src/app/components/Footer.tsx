@@ -56,9 +56,12 @@ export function Footer() {
           <div>
             <h4 className="text-xs sm:text-sm tracking-wider uppercase mb-4 sm:mb-6 font-semibold text-gray-900">{t('contacts')}</h4>
             <ul className="space-y-3">
-              <li className="flex items-center space-x-3 text-xs sm:text-sm text-gray-600">
-                <Phone className="w-4 h-4 flex-shrink-0 text-gray-400" />
-                <a href="tel:+998886886777" className="hover:text-gray-900 transition-colors">+998 88 688 67 77</a>
+              <li className="flex items-start space-x-3 text-xs sm:text-sm text-gray-600">
+                <Phone className="w-4 h-4 mt-0.5 flex-shrink-0 text-gray-400" />
+                <div className="flex flex-col space-y-1">
+                  <a href="tel:+998886886777" className="hover:text-gray-900 transition-colors">+998 88 688 67 77</a>
+                  <a href="tel:+998977481990" className="hover:text-gray-900 transition-colors">+998 97 748 19 90</a>
+                </div>
               </li>
               <li className="flex items-center space-x-3 text-xs sm:text-sm text-gray-600">
                 <Clock className="w-4 h-4 flex-shrink-0 text-[#C8102E]" />

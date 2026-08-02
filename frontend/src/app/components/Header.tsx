@@ -31,8 +31,10 @@ export function Header() {
             <Clock className="w-3.5 h-3.5 text-[#C8102E]" />
             <span>{t('workingHours')}</span>
           </div>
-          <div className="hidden sm:block">
-            <span>+998 88 688 67 77</span>
+          <div className="hidden sm:flex items-center space-x-4">
+            <a href="tel:+998886886777" className="hover:text-white transition-colors">+998 88 688 67 77</a>
+            <span>•</span>
+            <a href="tel:+998977481990" className="hover:text-white transition-colors">+998 97 748 19 90</a>
           </div>
         </div>
       </div>
@@ -179,7 +181,10 @@ export function Header() {
 
             <div className="border-t border-gray-100 pt-6 mt-auto">
               <p className="text-xs text-gray-500 mb-2">{t('workingHours')}</p>
-              <p className="text-sm font-semibold text-gray-900">+998 88 688 67 77</p>
+              <div className="space-y-1">
+                <a href="tel:+998886886777" className="block text-sm font-semibold text-gray-900 hover:text-[#C8102E] transition-colors">+998 88 688 67 77</a>
+                <a href="tel:+998977481990" className="block text-sm font-semibold text-gray-900 hover:text-[#C8102E] transition-colors">+998 97 748 19 90</a>
+              </div>
             </div>
           </div>
         </div>
