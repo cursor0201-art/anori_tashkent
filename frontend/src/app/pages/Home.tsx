@@ -109,86 +109,39 @@ export function Home() {
         </div>
       </section>
 
-      {/* Categories */}
-      <section className="bg-gray-50 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl tracking-tight mb-4">{t('categories')}</h2>
-            <p className="text-gray-600">{t('categoriesSubtitle')}</p>
+      {/* Categories (Dynamic from Django Backend) */}
+      {categories.length > 0 && (
+        <section className="bg-gray-50 py-16 sm:py-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl tracking-tight mb-3 sm:mb-4">{t('categories')}</h2>
+              <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">{t('categoriesSubtitle')}</p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {categories.map((cat) => (
+                <Link
+                  key={cat.id}
+                  to={`/catalog?category=${cat.slug}`}
+                  className="group relative h-80 sm:h-96 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+                >
+                  <img
+                    src={cat.image_url || 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80'}
+                    alt={cat.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-end">
+                    <div className="p-6 sm:p-8 text-white w-full">
+                      <h3 className="text-2xl sm:text-3xl tracking-wide mb-2 font-normal">{cat.name}</h3>
+                      <p className="text-xs sm:text-sm text-gray-300 group-hover:text-white transition-colors">{t('goToCategory')} &rarr;</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {categories.length > 0 ? categories.slice(0, 3).map((cat) => (
-              <Link
-                key={cat.id}
-                to={`/catalog?category=${cat.slug}`}
-                className="group relative h-96 rounded-lg overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end z-10">
-                  <div className="p-8 text-white">
-                    <h3 className="text-2xl tracking-wide mb-2">{cat.name}</h3>
-                    <p className="text-sm text-gray-200">{t('goToCategory')}</p>
-                  </div>
-                </div>
-              </Link>
-            )) : (
-              <>
-                <Link
-                  to="/catalog?category=necklace"
-                  className="group relative h-96 rounded-lg overflow-hidden"
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80"
-                    alt="Necklaces"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                    <div className="p-8 text-white">
-                      <h3 className="text-2xl tracking-wide mb-2">{t('necklaces')}</h3>
-                      <p className="text-sm text-gray-200">{t('categoriesSubtitle')}</p>
-                    </div>
-                  </div>
-                </Link>
-
-                <Link
-                  to="/catalog?category=chain"
-                  className="group relative h-96 rounded-lg overflow-hidden"
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1601821765780-754fa98637c1?w=800&q=80"
-                    alt="Chains"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                    <div className="p-8 text-white">
-                      <h3 className="text-2xl tracking-wide mb-2">{t('chains')}</h3>
-                      <p className="text-sm text-gray-200">{t('categoriesSubtitle')}</p>
-                    </div>
-                  </div>
-                </Link>
-
-                <Link
-                  to="/catalog?category=pendant"
-                  className="group relative h-96 rounded-lg overflow-hidden"
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80"
-                    alt="Pendants"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
-                    <div className="p-8 text-white">
-                      <h3 className="text-2xl tracking-wide mb-2">{t('pendants')}</h3>
-                      <p className="text-sm text-gray-200">{t('categoriesSubtitle')}</p>
-                    </div>
-                  </div>
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Infinite Ticker Marquee Banner */}
       <section className="bg-gray-900 text-white py-6 overflow-hidden border-y border-gray-800">

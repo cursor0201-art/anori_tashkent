@@ -11,9 +11,10 @@ class ProductSizeInline(admin.TabularInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'name_uz', 'slug', 'created_at')
+    list_display = ('name', 'name_uz', 'slug', 'image_url', 'created_at')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'name_uz')
+    fields = ('name', 'name_uz', 'slug', 'image_url')
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
