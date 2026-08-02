@@ -18,6 +18,10 @@ export function Catalog() {
   const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
+    setSelectedCategory(categoryParam);
+  }, [categoryParam]);
+
+  useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
