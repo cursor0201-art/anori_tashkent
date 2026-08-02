@@ -2,14 +2,32 @@ from rest_framework import serializers
 from .models import Category, Product, ProductImage, ProductSize
 
 class CategorySerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
         fields = ['id', 'name', 'name_uz', 'slug', 'image_url', 'created_at']
 
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image:
+            url = obj.image.url
+            return request.build_absolute_uri(url) if request else url
+        return obj.image_url
+
 class ProductImageSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = ProductImage
         fields = ['id', 'image_url', 'alt', 'sort_order']
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image:
+            url = obj.image.url
+            return request.build_absolute_uri(url) if request else url
+        return obj.image_url
 
 class ProductSizeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,7 +48,13 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         first_image = obj.images.first()
-        return first_image.image_url if first_image else None
+        if first_image:
+            request = self.context.get('request')
+            if first_image.image:
+                url = first_image.image.url
+                return request.build_absolute_uri(url) if request else url
+            return first_image.image_url
+        return None
 
 class ProductDetailSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)

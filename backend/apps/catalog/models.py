@@ -6,8 +6,13 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     name_uz = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-    image_url = models.URLField(max_length=1000, blank=True, null=True)
+    image = models.ImageField(upload_to='categories/', blank=True, null=True, verbose_name="Загрузить фото")
+    image_url = models.URLField(max_length=1000, blank=True, null=True, verbose_name="Или URL картинки")
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def get_image_url(self):
+        return self.image.url if self.image else self.image_url
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -50,7 +55,8 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image_url = models.URLField(max_length=1000)
+    image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Загрузить фото")
+    image_url = models.URLField(max_length=1000, blank=True, null=True, verbose_name="Или URL картинки")
     alt = models.CharField(max_length=255, blank=True)
     sort_order = models.IntegerField(default=0)
 

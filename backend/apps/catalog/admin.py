@@ -3,6 +3,7 @@ from .models import Category, Product, ProductImage, ProductSize
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
+    fields = ('image', 'image_url', 'alt', 'sort_order')
     extra = 1
 
 class ProductSizeInline(admin.TabularInline):
@@ -11,10 +12,10 @@ class ProductSizeInline(admin.TabularInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'name_uz', 'slug', 'image_url', 'created_at')
+    list_display = ('name', 'name_uz', 'slug', 'created_at')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'name_uz')
-    fields = ('name', 'name_uz', 'slug', 'image_url')
+    fields = ('name', 'name_uz', 'slug', 'image', 'image_url')
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
