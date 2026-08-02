@@ -83,7 +83,7 @@ export function Footer() {
             <h4 className="text-xs sm:text-sm tracking-wider uppercase mb-4 sm:mb-6 font-semibold text-gray-900">{t('socialMedia')}</h4>
             <div className="flex items-center space-x-3">
               <a
-                href="https://instagram.com/anori.uz"
+                href="https://www.instagram.com/luna_by_anori"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-[#C8102E] hover:border-[#C8102E] transition-colors shadow-sm"

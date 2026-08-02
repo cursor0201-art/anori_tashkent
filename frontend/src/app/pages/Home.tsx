@@ -259,13 +259,13 @@ export function Home() {
       {/* Instagram */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <div className="text-center mb-12">
-          <h2 className="text-4xl tracking-tight mb-4">@anori_tashkent</h2>
+          <h2 className="text-4xl tracking-tight mb-4">@luna_by_anori</h2>
           <p className="text-gray-600 mb-6">{t('followInstagram')}</p>
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/luna_by_anori"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 text-gray-900 hover:text-yellow-700 transition-colors"
+            className="inline-flex items-center space-x-2 text-gray-900 hover:text-[#C8102E] transition-colors"
           >
             <span className="tracking-wider uppercase text-sm">{t('subscribe')}</span>
             <ArrowRight className="w-4 h-4" />
