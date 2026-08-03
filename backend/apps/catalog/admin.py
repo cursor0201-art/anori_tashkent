@@ -26,7 +26,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline, ProductSizeInline]
     fieldsets = (
         (None, {
-            'fields': ('name', 'name_uz', 'slug', 'description', 'price', 'category')
+            'fields': ('name', 'name_uz', 'slug', 'description', 'description_uz', 'price', 'category')
         }),
         ('Характеристики (Материал, Проба, Вес и т.д.)', {
             'fields': ('characteristics',),

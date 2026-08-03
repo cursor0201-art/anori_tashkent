@@ -1,11 +1,13 @@
 export interface Product {
   id: string;
   name: string;
+  name_uz?: string;
   price: number;
-  category: "necklace" | "chain" | "pendant";
+  category: "necklace" | "chain" | "pendant" | string;
   image: string;
   images: string[];
   description: string;
+  description_uz?: string;
   featured?: boolean;
 }
 

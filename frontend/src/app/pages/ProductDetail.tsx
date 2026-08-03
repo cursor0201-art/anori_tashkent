@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router';
 import { ArrowLeft, Truck, RotateCcw, Shield, Loader2 } from 'lucide-react';
 import { Product } from '../data/products';
 import { useCart } from '../context/CartContext';
+import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 import { TelegramButton } from '../components/TelegramButton';
 import { SEO } from '../components/SEO';
@@ -11,6 +12,7 @@ export function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
+  const { language, t } = useLanguage();
   const [product, setProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,11 +29,13 @@ export function ProductDetail() {
         const mappedProduct: Product = {
           id: p.id.toString(),
           name: p.name,
+          name_uz: p.name_uz,
           price: parseFloat(p.price),
           category: (p.category_name || '').toLowerCase(),
           image: p.images && p.images[0] ? p.images[0].image_url : '',
           images: p.images ? p.images.map((img: any) => img.image_url) : [],
           description: p.description,
+          description_uz: p.description_uz,
           featured: p.is_new
         };
         setProduct(mappedProduct);
@@ -139,14 +143,18 @@ export function ProductDetail() {
         <div className="flex flex-col justify-between">
           <div>
             <div className="mb-6">
-              <h1 className="text-2xl sm:text-4xl tracking-tight mb-3 font-normal">{product.name}</h1>
+              <h1 className="text-2xl sm:text-4xl tracking-tight mb-3 font-normal">
+                {language === 'uz' ? (product.name_uz || product.name) : product.name}
+              </h1>
               <p className="text-2xl sm:text-3xl font-bold text-gray-900">
-                {product.price.toLocaleString('ru-RU')} <span className="text-sm font-normal text-gray-500">сум</span>
+                {product.price.toLocaleString('ru-RU')} <span className="text-sm font-normal text-gray-500">{language === 'uz' ? "so'm" : "сум"}</span>
               </p>
             </div>
 
             <div className="mb-8">
-              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{product.description}</p>
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                {language === 'uz' ? (product.description_uz || product.description) : product.description}
+              </p>
             </div>
 
             {/* Desktop Action Buttons */}

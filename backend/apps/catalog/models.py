@@ -29,7 +29,8 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     name_uz = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, verbose_name="Описание (RU)")
+    description_uz = models.TextField(blank=True, verbose_name="Описание (UZ)")
     price = models.DecimalField(max_digits=12, decimal_places=0) # Using 0 decimal places for UZS
     category = models.ForeignKey(Category, related_name='products', on_delete=models.PROTECT)
     is_active = models.BooleanField(default=True)
