@@ -28,8 +28,8 @@ class ProductAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('name', 'name_uz', 'slug', 'description', 'description_uz', 'price', 'category')
         }),
-        ('Характеристики (Материал, Проба, Вес и т.д.)', {
-            'fields': ('characteristics',),
+        ('Характеристики', {
+            'fields': ('characteristics', 'characteristics_uz'),
         }),
         ('Статус и Наличие', {
             'fields': ('is_active', 'is_new', 'stock_quantity', 'rating', 'reviews_count')

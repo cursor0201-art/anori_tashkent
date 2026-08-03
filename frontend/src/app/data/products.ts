@@ -8,6 +8,8 @@ export interface Product {
   images: string[];
   description: string;
   description_uz?: string;
+  characteristics?: Record<string, string>;
+  characteristics_uz?: Record<string, string>;
   featured?: boolean;
 }
 

@@ -36,6 +36,8 @@ export function ProductDetail() {
           images: p.images ? p.images.map((img: any) => img.image_url) : [],
           description: p.description,
           description_uz: p.description_uz,
+          characteristics: p.characteristics || {},
+          characteristics_uz: p.characteristics_uz || {},
           featured: p.is_new
         };
         setProduct(mappedProduct);
@@ -156,6 +158,31 @@ export function ProductDetail() {
                 {language === 'uz' ? (product.description_uz || product.description) : product.description}
               </p>
             </div>
+
+            {/* Product Characteristics Block */}
+            {(() => {
+              const activeChar = language === 'uz' && product.characteristics_uz && Object.keys(product.characteristics_uz).length > 0
+                ? product.characteristics_uz
+                : product.characteristics;
+              
+              if (!activeChar || Object.keys(activeChar).length === 0) return null;
+
+              return (
+                <div className="mb-8 bg-gray-50 border border-gray-100 rounded-2xl p-5 shadow-sm">
+                  <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 border-b border-gray-200 pb-2">
+                    {language === 'uz' ? 'Xususiyatlari' : 'Характеристики'}
+                  </h3>
+                  <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                    {Object.entries(activeChar).map(([key, val]) => (
+                      <div key={key} className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200/50 pb-1.5">
+                        <dt className="text-gray-500 font-normal">{key}:</dt>
+                        <dd className="text-gray-900 font-medium sm:text-right">{String(val)}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              );
+            })()}
 
             {/* Desktop Action Buttons */}
             <div className="space-y-3 mb-8">

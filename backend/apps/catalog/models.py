@@ -38,7 +38,8 @@ class Product(models.Model):
     rating = models.FloatField(default=0.0)
     reviews_count = models.IntegerField(default=0)
     stock_quantity = models.IntegerField(default=0)
-    characteristics = models.JSONField(default=dict, blank=True)
+    characteristics = models.JSONField(default=dict, blank=True, verbose_name="Характеристики (RU)")
+    characteristics_uz = models.JSONField(default=dict, blank=True, verbose_name="Характеристики (UZ)")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
