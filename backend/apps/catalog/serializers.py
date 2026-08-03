@@ -10,10 +10,17 @@ class CategorySerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         request = self.context.get('request')
+        url = None
         if obj.image:
             url = obj.image.url
-            return request.build_absolute_uri(url) if request else url
-        return obj.image_url
+        elif obj.image_url:
+            url = obj.image_url
+
+        if url:
+            if request and not url.startswith('http://') and not url.startswith('https://'):
+                return request.build_absolute_uri(url)
+            return url
+        return None
 
 class ProductImageSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
@@ -24,10 +31,17 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         request = self.context.get('request')
+        url = None
         if obj.image:
             url = obj.image.url
-            return request.build_absolute_uri(url) if request else url
-        return obj.image_url
+        elif obj.image_url:
+            url = obj.image_url
+
+        if url:
+            if request and not url.startswith('http://') and not url.startswith('https://'):
+                return request.build_absolute_uri(url)
+            return url
+        return None
 
 class ProductSizeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,10 +64,16 @@ class ProductListSerializer(serializers.ModelSerializer):
         first_image = obj.images.first()
         if first_image:
             request = self.context.get('request')
+            url = None
             if first_image.image:
                 url = first_image.image.url
-                return request.build_absolute_uri(url) if request else url
-            return first_image.image_url
+            elif first_image.image_url:
+                url = first_image.image_url
+
+            if url:
+                if request and not url.startswith('http://') and not url.startswith('https://'):
+                    return request.build_absolute_uri(url)
+                return url
         return None
 
 class ProductDetailSerializer(serializers.ModelSerializer):
