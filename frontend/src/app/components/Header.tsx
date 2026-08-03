@@ -4,6 +4,7 @@ import { useCart } from '../context/CartContext';
 import { useLanguage } from '../context/LanguageContext';
 import { AnoriLogo } from './AnoriLogo';
 import { useState, useEffect } from 'react';
+import api from '../services/api';
 
 export function Header() {
   const { totalItems } = useCart();
@@ -22,18 +23,31 @@ export function Header() {
     };
   }, [mobileMenuOpen]);
 
+  const [categories, setCategories] = useState<{ id: number; name: string; name_uz: string; slug: string }[]>([]);
+
+  useEffect(() => {
+    api.get('catalog/categories/')
+      .then(res => {
+        if (res.data) {
+          const list = Array.isArray(res.data) ? res.data : (res.data.results || []);
+          setCategories(list);
+        }
+      })
+      .catch(err => console.error('Failed to load categories for header:', err));
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 pt-[env(safe-area-inset-top,0px)]">
       {/* Top Working Hours Bar (Hidden on Smartwatches < 360px) */}
       <div className="bg-gray-900 text-gray-300 py-1.5 px-4 text-xs hidden xs:block">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Clock className="w-3.5 h-3.5 text-[#C8102E]" />
+            <Clock className="w-3.5 h-3.5 text-red-500" />
             <span>{t('workingHours')}</span>
           </div>
-          <div className="hidden sm:flex items-center space-x-4">
+          <div className="hidden sm:flex items-center space-x-4 font-mono">
             <a href="tel:+998886886777" className="hover:text-white transition-colors">+998 88 688 67 77</a>
-            <span>•</span>
+            <span>|</span>
             <a href="tel:+998977481990" className="hover:text-white transition-colors">+998 97 748 19 90</a>
           </div>
         </div>
@@ -46,7 +60,7 @@ export function Header() {
             <AnoriLogo className="h-9 sm:h-11 md:h-12 w-auto" />
           </Link>
 
-          {/* Desktop Navigation (>= 1024px) */}
+          {/* Desktop Navigation (>= 1024px, Dynamic from DB) */}
           <nav className="hidden lg:flex items-center space-x-8 xl:space-x-12">
             <Link to="/" className="text-sm tracking-wider text-gray-700 hover:text-[#C8102E] transition-colors uppercase font-medium">
               {t('home')}
@@ -54,15 +68,15 @@ export function Header() {
             <Link to="/catalog" className="text-sm tracking-wider text-gray-700 hover:text-[#C8102E] transition-colors uppercase font-medium">
               {t('catalog')}
             </Link>
-            <Link to="/catalog?category=necklace" className="text-sm tracking-wider text-gray-700 hover:text-[#C8102E] transition-colors uppercase font-medium">
-              {t('necklaces')}
-            </Link>
-            <Link to="/catalog?category=chain" className="text-sm tracking-wider text-gray-700 hover:text-[#C8102E] transition-colors uppercase font-medium">
-              {t('chains')}
-            </Link>
-            <Link to="/catalog?category=pendant" className="text-sm tracking-wider text-gray-700 hover:text-[#C8102E] transition-colors uppercase font-medium">
-              {t('pendants')}
-            </Link>
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                to={`/catalog?category=${cat.slug}`}
+                className="text-sm tracking-wider text-gray-700 hover:text-[#C8102E] transition-colors uppercase font-medium"
+              >
+                {language === 'uz' ? (cat.name_uz || cat.name) : cat.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Right Controls: Language & Cart & Hamburger */}
@@ -96,7 +110,7 @@ export function Header() {
             {/* Shopping Cart Icon (Touch target 44x44px) */}
             <Link
               to="/cart"
-              className="relative min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-700 hover:text-[#C8102E] transition-colors"
+              className="relative p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-gray-700 hover:text-[#C8102E] transition-colors"
               aria-label="Корзина"
             >
               <ShoppingBag className="w-6 h-6" />
@@ -156,27 +170,16 @@ export function Header() {
               >
                 {t('catalog')}
               </Link>
-              <Link
-                to="/catalog?category=necklace"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-base tracking-wider text-gray-900 hover:text-[#C8102E] font-medium uppercase py-2"
-              >
-                {t('necklaces')}
-              </Link>
-              <Link
-                to="/catalog?category=chain"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-base tracking-wider text-gray-900 hover:text-[#C8102E] font-medium uppercase py-2"
-              >
-                {t('chains')}
-              </Link>
-              <Link
-                to="/catalog?category=pendant"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-base tracking-wider text-gray-900 hover:text-[#C8102E] font-medium uppercase py-2"
-              >
-                {t('pendants')}
-              </Link>
+              {categories.map((cat) => (
+                <Link
+                  key={cat.id}
+                  to={`/catalog?category=${cat.slug}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block text-base tracking-wider text-gray-900 hover:text-[#C8102E] font-medium uppercase py-2"
+                >
+                  {language === 'uz' ? (cat.name_uz || cat.name) : cat.name}
+                </Link>
+              ))}
             </nav>
 
             <div className="border-t border-gray-100 pt-6 mt-auto">
