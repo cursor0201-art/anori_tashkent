@@ -119,30 +119,22 @@ export function Home() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {categories.map((cat, idx) => {
-                const defaultFallbacks = [
-                  'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',
-                  'https://images.unsplash.com/photo-1601821765780-754fa98637c1?w=800&q=80',
-                  'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80',
-                  'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80'
-                ];
-                const fallbackImg = defaultFallbacks[idx % defaultFallbacks.length];
-                const imgSrc = cat.image_url && cat.image_url.trim() !== '' ? cat.image_url : fallbackImg;
+              {categories.map((cat) => {
+                const imgSrc = cat.image_url && cat.image_url.trim() !== '' ? cat.image_url : '';
 
                 return (
                   <Link
                     key={cat.id}
                     to={`/catalog?category=${cat.slug}`}
-                    className="group relative h-80 sm:h-96 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-gray-200"
+                    className="group relative h-80 sm:h-96 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-gradient-to-br from-gray-800 to-gray-900"
                   >
-                    <img
-                      src={imgSrc}
-                      alt={cat.name}
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = fallbackImg;
-                      }}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                    {imgSrc && (
+                      <img
+                        src={imgSrc}
+                        alt={cat.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-end">
                       <div className="p-6 sm:p-8 text-white w-full">
                         <h3 className="text-2xl sm:text-3xl tracking-wide mb-2 font-normal">{cat.name}</h3>
