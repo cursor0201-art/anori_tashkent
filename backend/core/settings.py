@@ -149,8 +149,15 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Media files storage
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# If persistent volume mounted at /var/media or /app/backend/media
+if os.path.exists('/var/media'):
+    MEDIA_ROOT = '/var/media'
+elif os.path.exists('/app/media'):
+    MEDIA_ROOT = '/app/media'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
