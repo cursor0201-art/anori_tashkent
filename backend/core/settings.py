@@ -151,8 +151,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files storage
 MEDIA_URL = '/media/'
-# If persistent volume mounted at /var/media or /app/backend/media
-if os.path.exists('/var/media'):
+# Detect persistent Koyeb volume mount path
+if os.path.exists('/app/backend/media'):
+    MEDIA_ROOT = '/app/backend/media'
+elif os.path.exists('/var/media'):
     MEDIA_ROOT = '/var/media'
 elif os.path.exists('/app/media'):
     MEDIA_ROOT = '/app/media'
