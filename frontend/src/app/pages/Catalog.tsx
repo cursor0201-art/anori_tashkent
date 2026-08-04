@@ -13,6 +13,7 @@ export function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [categories, setCategories] = useState<Array<{ id: number; name: string; name_uz: string; slug: string }>>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000000]); // Increased for UZS
   const [showFilters, setShowFilters] = useState(false);
@@ -20,6 +21,22 @@ export function Catalog() {
   useEffect(() => {
     setSelectedCategory(categoryParam);
   }, [categoryParam]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await api.get('catalog/categories/');
+        if (Array.isArray(response.data)) {
+          setCategories(response.data);
+        } else if (response.data && response.data.results) {
+          setCategories(response.data.results);
+        }
+      } catch (err) {
+        console.error('Failed to fetch categories for filter:', err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,8 +48,9 @@ export function Catalog() {
           const mappedProducts = response.data.results.map((p: any) => ({
             id: p.id.toString(),
             name: p.name,
+            name_uz: p.name_uz,
             price: parseFloat(p.price),
-            category: (p.category_slug || '').toLowerCase(),
+            category: p.category_slug || (p.category_name || '').toLowerCase(),
             image: p.image || '',
             images: p.image ? [p.image] : [],
             description: '', // Not in list view
@@ -55,31 +73,24 @@ export function Catalog() {
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
-      const categoryMatch = !selectedCategory || product.category === selectedCategory ||
-        (selectedCategory === 'necklace' && product.category.includes('ожерелье')) ||
-        (selectedCategory === 'chain' && product.category.includes('цепочка')) ||
-        (selectedCategory === 'pendant' && product.category.includes('кулон'));
+      const categoryMatch = !selectedCategory || product.category === selectedCategory || product.category === selectedCategory.toLowerCase();
       const priceMatch = product.price >= priceRange[0] && product.price <= priceRange[1];
       return categoryMatch && priceMatch;
     });
   }, [products, selectedCategory, priceRange]);
 
-  const categoryNames = {
-    necklace: 'Ожерелья',
-    chain: 'Цепочки',
-    pendant: 'Кулоны'
-  };
+  const activeCategoryObj = categories.find(c => c.slug === selectedCategory);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <SEO
-        title={selectedCategory ? `${categoryNames[selectedCategory as keyof typeof categoryNames]} — Silver jewelry в Ташкенте` : 'Каталог серебряных украшений и silver jewelry в Ташкенте'}
+        title={activeCategoryObj ? `${activeCategoryObj.name} — Silver jewelry в Ташкенте` : 'Каталог серебряных украшений и silver jewelry в Ташкенте'}
         description="Каталог серебряных украшений Anori Tashkent: silver rings, silver necklace, silver chain, серебряные цепочки и кулоны 925 пробы с быстрой доставкой."
         keywords="silver jewelry, silver rings, silver necklace, silver chain, серебряные украшения, серебряные цепочки, серебряные кольца, кулоны, Ташкент"
       />
       <div className="mb-12">
         <h1 className="text-4xl tracking-tight mb-4">
-          {selectedCategory ? categoryNames[selectedCategory as keyof typeof categoryNames] : 'Каталог'}
+          {activeCategoryObj ? activeCategoryObj.name : 'Каталог'}
         </h1>
         <p className="text-gray-600">Выберите украшение из нашей коллекции</p>
       </div>
@@ -103,40 +114,22 @@ export function Catalog() {
                     name="category"
                     checked={!selectedCategory}
                     onChange={() => setSelectedCategory(null)}
-                    className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
+                    className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
                   />
                   <span className="text-sm text-gray-700">Все украшения</span>
                 </label>
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="category"
-                    checked={selectedCategory === 'necklace'}
-                    onChange={() => setSelectedCategory('necklace')}
-                    className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
-                  />
-                  <span className="text-sm text-gray-700">Ожерелья</span>
-                </label>
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="category"
-                    checked={selectedCategory === 'chain'}
-                    onChange={() => setSelectedCategory('chain')}
-                    className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
-                  />
-                  <span className="text-sm text-gray-700">Цепочки</span>
-                </label>
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="category"
-                    checked={selectedCategory === 'pendant'}
-                    onChange={() => setSelectedCategory('pendant')}
-                    className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
-                  />
-                  <span className="text-sm text-gray-700">Кулоны</span>
-                </label>
+                {categories.map((cat) => (
+                  <label key={cat.id} className="flex items-center space-x-3 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="category"
+                      checked={selectedCategory === cat.slug}
+                      onChange={() => setSelectedCategory(cat.slug)}
+                      className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
+                    />
+                    <span className="text-sm text-gray-700">{cat.name}</span>
+                  </label>
+                ))}
               </div>
             </div>
 
@@ -210,40 +203,22 @@ export function Catalog() {
                       name="category-mobile"
                       checked={!selectedCategory}
                       onChange={() => setSelectedCategory(null)}
-                      className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
+                      className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
                     />
                     <span className="text-sm text-gray-700">Все украшения</span>
                   </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="category-mobile"
-                      checked={selectedCategory === 'necklace'}
-                      onChange={() => setSelectedCategory('necklace')}
-                      className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
-                    />
-                    <span className="text-sm text-gray-700">Ожерелья</span>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="category-mobile"
-                      checked={selectedCategory === 'chain'}
-                      onChange={() => setSelectedCategory('chain')}
-                      className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
-                    />
-                    <span className="text-sm text-gray-700">Цепочки</span>
-                  </label>
-                  <label className="flex items-center space-x-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="category-mobile"
-                      checked={selectedCategory === 'pendant'}
-                      onChange={() => setSelectedCategory('pendant')}
-                      className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
-                    />
-                    <span className="text-sm text-gray-700">Кулоны</span>
-                  </label>
+                  {categories.map((cat) => (
+                    <label key={cat.id} className="flex items-center space-x-3 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="category-mobile"
+                        checked={selectedCategory === cat.slug}
+                        onChange={() => setSelectedCategory(cat.slug)}
+                        className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
+                      />
+                      <span className="text-sm text-gray-700">{cat.name}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
 
