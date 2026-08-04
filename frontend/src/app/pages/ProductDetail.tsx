@@ -161,27 +161,64 @@ export function ProductDetail() {
 
             {/* Product Characteristics Block */}
             {(() => {
-              const activeChar = language === 'uz' && product.characteristics_uz && Object.keys(product.characteristics_uz).length > 0
+              const activeChar = language === 'uz' && product.characteristics_uz && product.characteristics_uz !== ''
                 ? product.characteristics_uz
                 : product.characteristics;
               
-              if (!activeChar || Object.keys(activeChar).length === 0) return null;
+              if (!activeChar) return null;
 
-              return (
-                <div className="mb-8 bg-gray-50 border border-gray-100 rounded-2xl p-5 shadow-sm">
-                  <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 border-b border-gray-200 pb-2">
-                    {language === 'uz' ? 'Xususiyatlari' : 'Характеристики'}
-                  </h3>
-                  <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
-                    {Object.entries(activeChar).map(([key, val]) => (
-                      <div key={key} className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200/50 pb-1.5">
-                        <dt className="text-gray-500 font-normal">{key}:</dt>
-                        <dd className="text-gray-900 font-medium sm:text-right">{String(val)}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              );
+              // If it's a simple string (plain text)
+              if (typeof activeChar === 'string') {
+                const lines = activeChar.split('\n').map(l => l.trim()).filter(Boolean);
+                if (lines.length === 0) return null;
+
+                return (
+                  <div className="mb-8 bg-gray-50 border border-gray-100 rounded-2xl p-5 shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 border-b border-gray-200 pb-2">
+                      {language === 'uz' ? 'Xususiyatlari' : 'Характеристики'}
+                    </h3>
+                    <div className="space-y-2 text-sm">
+                      {lines.map((line, idx) => {
+                        const parts = line.split(/:(.+)/);
+                        if (parts.length >= 2) {
+                          return (
+                            <div key={idx} className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200/50 pb-1.5">
+                              <span className="text-gray-500 font-normal">{parts[0].trim()}:</span>
+                              <span className="text-gray-900 font-medium sm:text-right">{parts[1].trim()}</span>
+                            </div>
+                          );
+                        }
+                        return (
+                          <div key={idx} className="text-gray-800 border-b border-gray-200/50 pb-1.5">
+                            {line}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              }
+
+              // If it's an object (JSON)
+              if (typeof activeChar === 'object' && Object.keys(activeChar).length > 0) {
+                return (
+                  <div className="mb-8 bg-gray-50 border border-gray-100 rounded-2xl p-5 shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4 border-b border-gray-200 pb-2">
+                      {language === 'uz' ? 'Xususiyatlari' : 'Характеристики'}
+                    </h3>
+                    <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                      {Object.entries(activeChar).map(([key, val]) => (
+                        <div key={key} className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200/50 pb-1.5">
+                          <dt className="text-gray-500 font-normal">{key}:</dt>
+                          <dd className="text-gray-900 font-medium sm:text-right">{String(val)}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                );
+              }
+
+              return null;
             })()}
 
             {/* Desktop Action Buttons */}
