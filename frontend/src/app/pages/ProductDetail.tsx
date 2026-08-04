@@ -225,8 +225,12 @@ export function ProductDetail() {
             <div className="flex items-start space-x-3 text-sm text-gray-600">
               <RotateCcw className="w-5 h-5 text-[#C8102E] flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-medium text-gray-900">Возврат</h3>
-                <p className="text-xs text-gray-500">Возврат в течение 14 дней при сохранении товарного вида.</p>
+                <h3 className="font-medium text-gray-900">{language === 'uz' ? 'Qaytarish' : 'Возврат'}</h3>
+                <p className="text-xs text-gray-500">
+                  {language === 'uz' 
+                    ? "Mahsulot ko'rinishi saqlangan holda 3 kun ichida qaytarish." 
+                    : "Возврат в течение 3 дней при сохранении товарного вида."}
+                </p>
               </div>
             </div>
 
