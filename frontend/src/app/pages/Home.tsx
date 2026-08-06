@@ -9,7 +9,7 @@ import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 
 export function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,6 +23,7 @@ export function Home() {
         const mappedProducts = productsRes.data.results.map((p: any) => ({
           id: p.id.toString(),
           name: p.name,
+          name_uz: p.name_uz,
           price: parseFloat(p.price),
           category: (p.category_slug || '').toLowerCase(),
           image: p.image || '',
@@ -137,7 +138,9 @@ export function Home() {
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-end">
                       <div className="p-6 sm:p-8 text-white w-full">
-                        <h3 className="text-2xl sm:text-3xl tracking-wide mb-2 font-normal">{cat.name}</h3>
+                        <h3 className="text-2xl sm:text-3xl tracking-wide mb-2 font-normal">
+                          {language === 'uz' ? (cat.name_uz || cat.name) : cat.name}
+                        </h3>
                         <p className="text-xs sm:text-sm text-gray-300 group-hover:text-white transition-colors">{t('goToCategory')} &rarr;</p>
                       </div>
                     </div>
