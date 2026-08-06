@@ -227,7 +227,9 @@ export function ProductDetail() {
                 onClick={handleAddToCart}
                 className="w-full min-h-[48px] bg-gray-900 text-white font-medium py-3.5 px-6 rounded-full hover:bg-[#C8102E] transition-colors duration-300 shadow-sm"
               >
-                {addedToCart ? 'Добавлено в корзину!' : 'Добавить в корзину'}
+                {addedToCart 
+                  ? (language === 'uz' ? "Savatga qo'shildi!" : "Добавлено в корзину!") 
+                  : (language === 'uz' ? "Savatga qo'shish" : "Добавить в корзину")}
               </button>
 
               <button
@@ -237,13 +239,13 @@ export function ProductDetail() {
                 }}
                 className="w-full min-h-[48px] border-2 border-gray-900 text-gray-900 font-medium py-3.5 px-6 rounded-full hover:bg-gray-50 transition-colors duration-300"
               >
-                Купить сейчас
+                {language === 'uz' ? "Hozir xarid qilish" : "Купить сейчас"}
               </button>
 
               <div className="pt-2">
                 <TelegramButton product={product} variant="primary" className="w-full min-h-[48px]" />
                 <p className="text-center text-xs text-gray-500 mt-2">
-                  Быстрое оформление через Telegram
+                  {language === 'uz' ? "Telegram orqali tezkor rasmiylashtirish" : "Быстрое оформление через Telegram"}
                 </p>
               </div>
             </div>
@@ -254,8 +256,14 @@ export function ProductDetail() {
             <div className="flex items-start space-x-3 text-sm text-gray-600">
               <Truck className="w-5 h-5 text-[#C8102E] flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-medium text-gray-900">Быстрая доставка</h3>
-                <p className="text-xs text-gray-500">По Ташкенту в течение 24 часов. По Узбекистану — 2-3 дня.</p>
+                <h3 className="font-medium text-gray-900">
+                  {language === 'uz' ? "Tezkor yetkazib berish" : "Быстрая доставка"}
+                </h3>
+                <p className="text-xs text-gray-500">
+                  {language === 'uz' 
+                    ? "Toshkent bo'ylab 24 soat ichida. O'zbekiston bo'ylab — 2-3 kun." 
+                    : "По Ташкенту в течение 24 часов. По Узбекистану — 2-3 дня."}
+                </p>
               </div>
             </div>
 
@@ -274,8 +282,12 @@ export function ProductDetail() {
             <div className="flex items-start space-x-3 text-sm text-gray-600">
               <Shield className="w-5 h-5 text-[#C8102E] flex-shrink-0 mt-0.5" />
               <div>
-                <h3 className="font-medium text-gray-900">Гарантия качества</h3>
-                <p className="text-xs text-gray-500">Премиальное серебро 925 пробы.</p>
+                <h3 className="font-medium text-gray-900">
+                  {language === 'uz' ? "Sifat kafolati" : "Гарантия качества"}
+                </h3>
+                <p className="text-xs text-gray-500">
+                  {language === 'uz' ? "Oliy navli 925 probali kumush." : "Премиальное серебро 925 пробы."}
+                </p>
               </div>
             </div>
           </div>
@@ -286,8 +298,12 @@ export function ProductDetail() {
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 lg:hidden shadow-2xl pb-[calc(12px+env(safe-area-inset-bottom,0px))]">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           <div>
-            <p className="text-xs text-gray-500 line-clamp-1">{product.name}</p>
-            <p className="text-sm font-bold text-gray-900">{product.price.toLocaleString('ru-RU')} сум</p>
+            <p className="text-xs text-gray-500 line-clamp-1">
+              {language === 'uz' ? (product.name_uz || product.name) : product.name}
+            </p>
+            <p className="text-sm font-bold text-gray-900">
+              {product.price.toLocaleString('ru-RU')} {language === 'uz' ? "so'm" : "сум"}
+            </p>
           </div>
           <TelegramButton product={product} variant="primary" className="min-h-[44px] text-xs px-5 py-2.5 rounded-full" />
         </div>
@@ -295,7 +311,9 @@ export function ProductDetail() {
 
       {/* Related Products */}
       <div className="mt-16 sm:mt-24">
-        <h2 className="text-xl sm:text-3xl tracking-tight mb-8">Вам может понравиться</h2>
+        <h2 className="text-xl sm:text-3xl tracking-tight mb-8">
+          {language === 'uz' ? "Sizga yoqishi mumkin" : "Вам может понравиться"}
+        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {relatedProducts
             .slice(0, 4)
@@ -308,15 +326,15 @@ export function ProductDetail() {
                 <div className="relative aspect-square overflow-hidden bg-gray-50 rounded-lg mb-3">
                   <img
                     src={relatedProduct.image}
-                    alt={relatedProduct.name}
+                    alt={language === 'uz' ? (relatedProduct.name_uz || relatedProduct.name) : relatedProduct.name}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <h3 className="text-xs sm:text-sm font-medium text-gray-900 group-hover:text-[#C8102E] transition-colors line-clamp-2 min-h-[2.5rem]">
-                  {relatedProduct.name}
+                  {language === 'uz' ? (relatedProduct.name_uz || relatedProduct.name) : relatedProduct.name}
                 </h3>
                 <p className="text-sm font-bold text-gray-900 mt-1">
-                  {relatedProduct.price.toLocaleString('ru-RU')} сум
+                  {relatedProduct.price.toLocaleString('ru-RU')} {language === 'uz' ? "so'm" : "сум"}
                 </p>
               </Link>
             ))}
