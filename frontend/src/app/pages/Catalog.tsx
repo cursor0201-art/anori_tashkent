@@ -4,11 +4,13 @@ import { SlidersHorizontal, Loader2 } from 'lucide-react';
 import { Product } from '../data/products';
 import { ProductCard } from '../components/ProductCard';
 import { SEO } from '../components/SEO';
+import { useLanguage } from '../context/LanguageContext';
 import api from '../services/api';
 
 export function Catalog() {
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
+  const { language } = useLanguage();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,14 +64,14 @@ export function Catalog() {
         }
       } catch (err) {
         console.error('Failed to fetch products:', err);
-        setError('Не удалось загрузить товары. Пожалуйста, попробуйте позже.');
+        setError(language === 'uz' ? "Mahsulotlarni yuklashda xatolik yuz berdi." : "Не удалось загрузить товары. Пожалуйста, попробуйте позже.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchProducts();
-  }, []);
+  }, [language]);
 
   const filteredProducts = useMemo(() => {
     return products.filter(product => {
@@ -80,19 +82,24 @@ export function Catalog() {
   }, [products, selectedCategory, priceRange]);
 
   const activeCategoryObj = categories.find(c => c.slug === selectedCategory);
+  const currentCategoryTitle = activeCategoryObj 
+    ? (language === 'uz' ? (activeCategoryObj.name_uz || activeCategoryObj.name) : activeCategoryObj.name)
+    : (language === 'uz' ? 'Katalog' : 'Каталог');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <SEO
-        title={activeCategoryObj ? `${activeCategoryObj.name} — Silver jewelry в Ташкенте` : 'Каталог серебряных украшений и silver jewelry в Ташкенте'}
-        description="Каталог серебряных украшений Anori Tashkent: silver rings, silver necklace, silver chain, серебряные цепочки и кулоны 925 пробы с быстрой доставкой."
-        keywords="silver jewelry, silver rings, silver necklace, silver chain, серебряные украшения, серебряные цепочки, серебряные кольца, кулоны, Ташкент"
+        title={`${currentCategoryTitle} — Silver jewelry ${language === 'uz' ? 'Toshkentda' : 'в Ташкенте'}`}
+        description="Anori Tashkent silver jewelry katalogi."
+        keywords="silver jewelry, silver rings, silver necklace, silver chain, kumush taqinchoqlar, Tashkent"
       />
       <div className="mb-12">
         <h1 className="text-4xl tracking-tight mb-4">
-          {activeCategoryObj ? activeCategoryObj.name : 'Каталог'}
+          {currentCategoryTitle}
         </h1>
-        <p className="text-gray-600">Выберите украшение из нашей коллекции</p>
+        <p className="text-gray-600">
+          {language === 'uz' ? 'Kolleksiyamizdan taqinchoq tanlang' : 'Выберите украшение из нашей коллекции'}
+        </p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
@@ -101,12 +108,14 @@ export function Catalog() {
           <div className="sticky top-24">
             <h3 className="text-lg mb-6 flex items-center space-x-2">
               <SlidersHorizontal className="w-5 h-5" />
-              <span>Фильтры</span>
+              <span>{language === 'uz' ? 'Filtrlar' : 'Фильтры'}</span>
             </h3>
 
             {/* Category Filter */}
             <div className="mb-8">
-              <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">Категория</h4>
+              <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">
+                {language === 'uz' ? 'Kategoriya' : 'Категория'}
+              </h4>
               <div className="space-y-3">
                 <label className="flex items-center space-x-3 cursor-pointer">
                   <input
@@ -116,7 +125,9 @@ export function Catalog() {
                     onChange={() => setSelectedCategory(null)}
                     className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
                   />
-                  <span className="text-sm text-gray-700">Все украшения</span>
+                  <span className="text-sm text-gray-700">
+                    {language === 'uz' ? 'Barcha taqinchoqlar' : 'Все украшения'}
+                  </span>
                 </label>
                 {categories.map((cat) => (
                   <label key={cat.id} className="flex items-center space-x-3 cursor-pointer">
@@ -127,7 +138,9 @@ export function Catalog() {
                       onChange={() => setSelectedCategory(cat.slug)}
                       className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
                     />
-                    <span className="text-sm text-gray-700">{cat.name}</span>
+                    <span className="text-sm text-gray-700">
+                      {language === 'uz' ? (cat.name_uz || cat.name) : cat.name}
+                    </span>
                   </label>
                 ))}
               </div>
@@ -135,7 +148,9 @@ export function Catalog() {
 
             {/* Price Filter */}
             <div>
-              <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">Цена</h4>
+              <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">
+                {language === 'uz' ? 'Narx' : 'Цена'}
+              </h4>
               <div className="space-y-3">
                 <label className="flex items-center space-x-3 cursor-pointer">
                   <input
@@ -145,7 +160,9 @@ export function Catalog() {
                     onChange={() => setPriceRange([0, 10000000])}
                     className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                   />
-                  <span className="text-sm text-gray-700">Все цены</span>
+                  <span className="text-sm text-gray-700">
+                    {language === 'uz' ? 'Barcha narxlar' : 'Все цены'}
+                  </span>
                 </label>
                 <label className="flex items-center space-x-3 cursor-pointer">
                   <input
@@ -155,7 +172,9 @@ export function Catalog() {
                     onChange={() => setPriceRange([105000, 300000])}
                     className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                   />
-                  <span className="text-sm text-gray-700">105 000 - 300 000 сум</span>
+                  <span className="text-sm text-gray-700">
+                    {language === 'uz' ? '105 000 - 300 000 so\'m' : '105 000 - 300 000 сум'}
+                  </span>
                 </label>
                 <label className="flex items-center space-x-3 cursor-pointer">
                   <input
@@ -165,7 +184,9 @@ export function Catalog() {
                     onChange={() => setPriceRange([300000, 700000])}
                     className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                   />
-                  <span className="text-sm text-gray-700">300 000 - 700 000 сум</span>
+                  <span className="text-sm text-gray-700">
+                    {language === 'uz' ? '300 000 - 700 000 so\'m' : '300 000 - 700 000 сум'}
+                  </span>
                 </label>
                 <label className="flex items-center space-x-3 cursor-pointer">
                   <input
@@ -175,7 +196,9 @@ export function Catalog() {
                     onChange={() => setPriceRange([700000, 10000000])}
                     className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                   />
-                  <span className="text-sm text-gray-700">От 700 000 сум</span>
+                  <span className="text-sm text-gray-700">
+                    {language === 'uz' ? '700 000 so\'mdan yuqori' : 'От 700 000 сум'}
+                  </span>
                 </label>
               </div>
             </div>
@@ -189,13 +212,15 @@ export function Catalog() {
             className="flex items-center space-x-2 text-sm border border-gray-300 px-4 py-2 rounded-lg hover:border-gray-400 transition-colors"
           >
             <SlidersHorizontal className="w-4 h-4" />
-            <span>Фильтры</span>
+            <span>{language === 'uz' ? 'Filtrlar' : 'Фильтры'}</span>
           </button>
 
           {showFilters && (
             <div className="mt-6 p-6 border border-gray-200 rounded-lg bg-white">
               <div className="mb-6">
-                <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">Категория</h4>
+                <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">
+                  {language === 'uz' ? 'Kategoriya' : 'Категория'}
+                </h4>
                 <div className="space-y-3">
                   <label className="flex items-center space-x-3 cursor-pointer">
                     <input
@@ -205,7 +230,9 @@ export function Catalog() {
                       onChange={() => setSelectedCategory(null)}
                       className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
                     />
-                    <span className="text-sm text-gray-700">Все украшения</span>
+                    <span className="text-sm text-gray-700">
+                      {language === 'uz' ? 'Barcha taqinchoqlar' : 'Все украшения'}
+                    </span>
                   </label>
                   {categories.map((cat) => (
                     <label key={cat.id} className="flex items-center space-x-3 cursor-pointer">
@@ -216,14 +243,18 @@ export function Catalog() {
                         onChange={() => setSelectedCategory(cat.slug)}
                         className="w-4 h-4 text-[#C8102E] border-gray-300 focus:ring-[#C8102E]"
                       />
-                      <span className="text-sm text-gray-700">{cat.name}</span>
+                      <span className="text-sm text-gray-700">
+                        {language === 'uz' ? (cat.name_uz || cat.name) : cat.name}
+                      </span>
                     </label>
                   ))}
                 </div>
               </div>
 
               <div>
-                <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">Цена</h4>
+                <h4 className="text-sm tracking-wider uppercase mb-4 text-gray-700">
+                  {language === 'uz' ? 'Narx' : 'Цена'}
+                </h4>
                 <div className="space-y-3">
                   <label className="flex items-center space-x-3 cursor-pointer">
                     <input
@@ -233,7 +264,9 @@ export function Catalog() {
                       onChange={() => setPriceRange([0, 10000000])}
                       className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                     />
-                    <span className="text-sm text-gray-700">Все цены</span>
+                    <span className="text-sm text-gray-700">
+                      {language === 'uz' ? 'Barcha narxlar' : 'Все цены'}
+                    </span>
                   </label>
                   <label className="flex items-center space-x-3 cursor-pointer">
                     <input
@@ -243,7 +276,9 @@ export function Catalog() {
                       onChange={() => setPriceRange([0, 250000])}
                       className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                     />
-                    <span className="text-sm text-gray-700">До 250 000 сум</span>
+                    <span className="text-sm text-gray-700">
+                      {language === 'uz' ? '250 000 so\'mgacha' : 'До 250 000 сум'}
+                    </span>
                   </label>
                   <label className="flex items-center space-x-3 cursor-pointer">
                     <input
@@ -253,7 +288,9 @@ export function Catalog() {
                       onChange={() => setPriceRange([250000, 500000])}
                       className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                     />
-                    <span className="text-sm text-gray-700">250 000 - 500 000 сум</span>
+                    <span className="text-sm text-gray-700">
+                      {language === 'uz' ? '250 000 - 500 000 so\'m' : '250 000 - 500 000 сум'}
+                    </span>
                   </label>
                   <label className="flex items-center space-x-3 cursor-pointer">
                     <input
@@ -263,7 +300,9 @@ export function Catalog() {
                       onChange={() => setPriceRange([500000, 10000000])}
                       className="w-4 h-4 text-yellow-700 border-gray-300 focus:ring-yellow-700"
                     />
-                    <span className="text-sm text-gray-700">От 500 000 сум</span>
+                    <span className="text-sm text-gray-700">
+                      {language === 'uz' ? '500 000 so\'mdan yuqori' : 'От 500 000 сум'}
+                    </span>
                   </label>
                 </div>
               </div>
@@ -275,7 +314,8 @@ export function Catalog() {
         <div className="flex-1">
           <div className="mb-6 flex items-center justify-between">
             <p className="text-xs sm:text-sm text-gray-600">
-              Найдено украшений: <span className="font-semibold text-gray-900">{filteredProducts.length}</span>
+              {language === 'uz' ? 'Topilgan taqinchoqlar: ' : 'Найдено украшений: '}
+              <span className="font-semibold text-gray-900">{filteredProducts.length}</span>
             </p>
           </div>
 
