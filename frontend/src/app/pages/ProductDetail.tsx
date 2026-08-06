@@ -42,20 +42,35 @@ export function ProductDetail() {
         };
         setProduct(mappedProduct);
 
-        const relatedRes = await api.get(`catalog/products/`, {
+        let relatedRes = await api.get(`catalog/products/`, {
           params: { category__slug: p.category_slug || p.category }
         });
-        const mappedRelated = relatedRes.data.results
-          .filter((item: any) => item.id !== p.id)
-          .map((item: any) => ({
-            id: item.id.toString(),
-            name: item.name,
-            price: parseFloat(item.price),
-            category: (item.category_slug || '').toLowerCase(),
-            image: item.image || '',
-            images: item.image ? [item.image] : [],
-            description: '',
-          }));
+        let relatedItems = (relatedRes.data.results || []).filter((item: any) => item.id !== p.id);
+        
+        // Fallback to all products if category has fewer than 4 items
+        if (relatedItems.length < 4) {
+          const allRes = await api.get(`catalog/products/`);
+          const fallbackItems = (allRes.data.results || []).filter((item: any) => item.id !== p.id);
+          // Combine ensuring no duplicates
+          const itemIds = new Set(relatedItems.map((i: any) => i.id));
+          for (const fb of fallbackItems) {
+            if (!itemIds.has(fb.id)) {
+              relatedItems.push(fb);
+              itemIds.add(fb.id);
+            }
+          }
+        }
+
+        const mappedRelated = relatedItems.map((item: any) => ({
+          id: item.id.toString(),
+          name: item.name,
+          name_uz: item.name_uz,
+          price: parseFloat(item.price),
+          category: (item.category_slug || '').toLowerCase(),
+          image: item.image || '',
+          images: item.image ? [item.image] : [],
+          description: '',
+        }));
         setRelatedProducts(mappedRelated);
       } catch (err) {
         console.error('Failed to fetch product:', err);
