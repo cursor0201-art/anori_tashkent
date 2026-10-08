@@ -1,8 +1,17 @@
-export function AnoriLogo({ className = "h-10 w-auto" }: { className?: string }) {
+export function AnoriLogo({
+  className = "h-10 w-auto",
+  variant = 'dark',
+}: {
+  className?: string;
+  variant?: 'dark' | 'light';
+}) {
+  const textFill = variant === 'dark' ? '#F5F5F5' : '#1A1A1A';
+  const taglineFill = variant === 'dark' ? '#E5E5E5' : '#222222';
+
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 160" className={className}>
       {/* AN */}
-      <text x="5" y="96" fontFamily="'Didot', 'Bodoni MT', 'Cinzel', 'Times New Roman', serif" fontSize="88" fontWeight="bold" fill="#1A1A1A" letterSpacing="2">
+      <text x="5" y="96" fontFamily="'Didot', 'Bodoni MT', 'Cinzel', 'Times New Roman', serif" fontSize="88" fontWeight="bold" fill={textFill} letterSpacing="2">
         AN
       </text>
 
@@ -47,12 +56,12 @@ export function AnoriLogo({ className = "h-10 w-auto" }: { className?: string })
       </g>
 
       {/* RI */}
-      <text x="312" y="96" fontFamily="'Didot', 'Bodoni MT', 'Cinzel', 'Times New Roman', serif" fontSize="88" fontWeight="bold" fill="#1A1A1A" letterSpacing="2">
+      <text x="312" y="96" fontFamily="'Didot', 'Bodoni MT', 'Cinzel', 'Times New Roman', serif" fontSize="88" fontWeight="bold" fill={textFill} letterSpacing="2">
         RI
       </text>
 
       {/* Subtitle Tagline */}
-      <text x="8" y="140" fontFamily="'Montserrat', 'Helvetica Neue', sans-serif" fontSize="15.5" fontWeight="600" fill="#222222" letterSpacing="7 font-sans">
+      <text x="8" y="140" fontFamily="'Montserrat', 'Helvetica Neue', sans-serif" fontSize="15.5" fontWeight="600" fill={taglineFill} letterSpacing="7">
         JEWELLERY AND ACCESSORIES STORE
       </text>
     </svg>

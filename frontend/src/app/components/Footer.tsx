@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { Instagram, Facebook, Send, Mail, Phone, MapPin, Clock } from 'lucide-react';
 import { Link } from 'react-router';
 import { AnoriLogo } from './AnoriLogo';
 import { useLanguage } from '../context/LanguageContext';
@@ -90,6 +90,15 @@ export function Footer() {
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://t.me/anori_tashkent"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-[#24A1DE] hover:border-[#24A1DE] transition-colors shadow-sm"
+                aria-label="Telegram"
+              >
+                <Send className="w-5 h-5" />
               </a>
               <a
                 href="https://facebook.com"
