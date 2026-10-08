@@ -24,11 +24,14 @@ DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[
     '*',
-    'presidential-marylynne-baveehub-f2fad4d9.koyeb.app',
+    'localhost',
+    '127.0.0.1',
     'anori.uz',
     'www.anori.uz',
-    'localhost',
-    '127.0.0.1'
+    '.koyeb.app',
+    '*.koyeb.app',
+    'presidential-marylynne-baveehub-f2fad4d9.koyeb.app',
+    'si-bave-hub-31a5dccc.koyeb.app',
 ])
 
 
@@ -191,11 +194,16 @@ CORS_ALLOW_ALL_ORIGINS = env.bool('CORS_ALLOW_ALL_ORIGINS', default=True)
 
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[
     "https://anori.uz",
-    "https://www.anori.uz"
+    "https://www.anori.uz",
+    "https://*.koyeb.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
 ])
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://.*\.pages\.dev$",
+    r"^https://.*\.koyeb\.app$",
+    r"^http://.*\.koyeb\.app$",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -204,7 +212,10 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[
     "https://anori.uz",
     "https://www.anori.uz",
     "https://*.pages.dev",
-    "https://presidential-marylynne-baveehub-f2fad4d9.koyeb.app"
+    "https://*.koyeb.app",
+    "http://*.koyeb.app",
+    "https://presidential-marylynne-baveehub-f2fad4d9.koyeb.app",
+    "https://si-bave-hub-31a5dccc.koyeb.app",
 ])
 
 # Security settings for production
